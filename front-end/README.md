@@ -1,0 +1,1 @@
+This package is for front-end code using `Vue.js`.
