@@ -1,7 +1,5 @@
-# ecard
- for web homework
+# Web Development Course Project
 
----
 
 ### 项目成员基本信息
 
