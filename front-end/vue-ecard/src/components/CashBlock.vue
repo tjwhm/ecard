@@ -18,25 +18,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-.title-zh, .title-en {
-    opacity: 0.3;
-    text-transform: uppercase;
-    font-size: 22px;
+.title-zh,
+.title-en {
+  opacity: 0.3;
+  text-transform: uppercase;
+  font-size: 22px;
 }
 
 .title-en {
-    font-weight: bold;
-    letter-spacing: 0.5px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
 .amount {
-    font-size: 110px;
+  font-size: 110px;
 }
 
 .amount:after {
-    content: " ¥";
-    opacity: 0.3;
+  content: " ¥";
+  opacity: 0.3;
 }
-
 </style>

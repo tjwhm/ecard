@@ -26,16 +26,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-
-
 </style>
 
 <style>
-  .flex-cashblock-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
+.flex-cashblock-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 </style>

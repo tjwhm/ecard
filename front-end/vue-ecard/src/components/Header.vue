@@ -12,40 +12,35 @@
 </template>
 
 <script>
-
 export default {
   name: "Header",
   props: {
     subheadings: String
   }
 };
-
-
 </script>
 
 <style scoped lang="scss">
-
 .header-container {
 }
 
 .ecard-logo {
-    width: 170px;
-    margin-right: 20px;
+  width: 170px;
+  margin-right: 20px;
 }
 
 .subheadings {
-    font-size: 50px;
-    font-weight: bold;
-    opacity: 0.4;
+  font-size: 50px;
+  font-weight: bold;
+  opacity: 0.4;
 }
 
 hr.header-divider {
-    border: none;
-    height: 7px;
-    width: 60px;
-    background-color: #eee;
-    display: inline-block;
-    margin-top: 80px;
+  border: none;
+  height: 7px;
+  width: 60px;
+  background-color: #eee;
+  display: inline-block;
+  margin-top: 80px;
 }
-
 </style>

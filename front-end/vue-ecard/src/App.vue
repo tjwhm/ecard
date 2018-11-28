@@ -32,7 +32,8 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
 * {
-  font-family: "Montserrat", "Avenir", "Segoe UI", Helvetica, Arial, "等线", "微软雅黑", sans-serif;
+  font-family: "Montserrat", "Avenir", "Segoe UI", Helvetica, Arial, "等线",
+    "微软雅黑", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
@@ -43,7 +44,8 @@ a {
 }
 
 .font-condensed {
-  font-family: "Directors", "FF Din", "Franklin Gothic", "等线", "微软雅黑", sans-serif;
+  font-family: "Directors", "FF Din", "Franklin Gothic", "等线", "微软雅黑",
+    sans-serif;
 }
 
 .left {
@@ -68,7 +70,4 @@ body {
   max-width: 900px;
   margin: 0 auto;
 }
-
-
-
 </style>
