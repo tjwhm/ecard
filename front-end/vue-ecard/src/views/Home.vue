@@ -8,8 +8,10 @@
       <CashBlock title-zh="过去 30 天消费" title-en="Recent Spendings" amount="893.75"/>
       <CashBlock title-zh="过去 30 天日均" title-en="Daily Average" amount="40.77"/>
     </div>
-    <div style="height: 90px;"/>
+    <div style="height: 70px;"/>
     <button>详单查询</button><button>挂失</button><button>帮助</button>
+    <div style="height: 50px;"/>
+    <Footer />
   </div>
 </template>
 
@@ -17,12 +19,14 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import CashBlock from "@/components/CashBlock.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "home",
   components: {
     Header,
-    CashBlock
+    CashBlock,
+    Footer
   }
 };
 </script>

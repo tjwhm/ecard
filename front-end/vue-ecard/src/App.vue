@@ -41,8 +41,18 @@
   box-sizing: border-box;
 }
 
+*::selection {
+  background-color: #2f5b6b;
+  color: #eee;
+}
+
 a {
   color: inherit;
+}
+
+a:hover {
+  opacity: 0.8;
+  text-decoration: none;
 }
 
 button {
