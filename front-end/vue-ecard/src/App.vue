@@ -37,10 +37,33 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
+  transition: all 0.2s;
+  box-sizing: border-box;
 }
 
 a {
   color: inherit;
+}
+
+button {
+  outline: none;
+  box-shadow: none;
+  background: none;
+  border: none;
+
+  background-color: #eee;
+  color: #141414;
+  padding: 8px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 25px;
+  min-width: 120px;
+  font-size: 20px;
+}
+
+button:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #eee;
 }
 
 .font-condensed {
