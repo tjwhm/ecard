@@ -9,7 +9,9 @@
       <CashBlock title-zh="过去 30 天日均" title-en="Daily Average" amount="40.77"/>
     </div>
     <div style="height: 70px;"/>
-    <button>详单查询</button><button>挂失</button><button>帮助</button>
+    <router-link to="/detail"><button>详单查询</button></router-link>
+    <button>挂失</button>
+    <button>帮助</button>
     <div style="height: 50px;"/>
     <Footer />
   </div>
@@ -32,12 +34,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-</style>
-
-<style>
-.flex-cashblock-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 </style>

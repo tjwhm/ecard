@@ -96,6 +96,7 @@ button:hover {
 body {
   background: #141414;
   margin-top: 20vh;
+  margin-bottom: 20vh;
   color: #eee;
 }
 
@@ -103,4 +104,12 @@ body {
   max-width: 900px;
   margin: 0 auto;
 }
+
+.flex-cashblock-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
 </style>
