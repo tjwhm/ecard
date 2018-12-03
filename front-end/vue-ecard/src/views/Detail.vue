@@ -2,7 +2,9 @@
   <div class="detail">
     <Header subheadings="Detail"/>
     <div style="height: 20px;"/>
+    <TitleCluster title-zh="近 30 次消费趋势" title-en="Recent Spendings Chart"></TitleCluster>
     <div id="chart-container"></div>
+    <TitleCluster title-zh="消费详单" title-en="Recent Spendings Details"></TitleCluster>
     <DataTable sourceUrl="https://api.myjson.com/bins/193so2"></DataTable>
     <div style="height: 70px;"/>
     <router-link to="/home"><button>返回 Home</button></router-link>
@@ -16,13 +18,15 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import DataTable from "@/components/DataTable.vue";
+import TitleCluster from "@/components/TitleCluster.vue";
 
 export default {
   name: "detail",
   components: {
     Header,
     Footer,
-    DataTable
+    DataTable,
+    TitleCluster
   },
   methods: {
     initChart: function() {
