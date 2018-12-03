@@ -13,26 +13,8 @@
 <script>
 export default {
   name: "DataTable",
-  data() {
-    return {
-      records: []
-    };
-  },
-  methods: {
-    initTable: function() {
-      fetch(this.sourceUrl)
-        .then(response => response.json())
-        .then(json => {
-          this.records = json.data
-          console.log(this.records)
-        });
-    }
-  },
   props: {
-    sourceUrl: String
-  },
-  created() {
-    this.initTable()
+    records: Array
   }
 };
 </script>

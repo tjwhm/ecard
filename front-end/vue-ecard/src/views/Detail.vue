@@ -2,10 +2,10 @@
   <div class="detail">
     <Header subheadings="Detail"/>
     <div style="height: 20px;"/>
-    <TitleCluster title-zh="近 30 次消费趋势" title-en="Recent Spendings Chart"></TitleCluster>
+    <TitleCluster title-zh="消费趋势" title-en="Recent Spendings Chart"></TitleCluster>
     <div id="chart-container"></div>
-    <TitleCluster title-zh="消费详单" title-en="Recent Spendings Details"></TitleCluster>
-    <DataTable sourceUrl="https://api.myjson.com/bins/193so2"></DataTable>
+    <TitleCluster title-zh="流水详单" title-en="Recent Spendings Details"></TitleCluster>
+    <DataTable :records="this.records"></DataTable>
     <div style="height: 70px;"/>
     <router-link to="/home"><button>返回 Home</button></router-link>
     <div style="height: 50px;"/>
@@ -28,67 +28,43 @@ export default {
     DataTable,
     TitleCluster
   },
+  data() {
+    return {
+      records: []
+    };
+  },
   methods: {
+    init: function() {
+      let sourceUrl = "https://api.myjson.com/bins/193so2";
+      fetch(sourceUrl)
+        .then(response => response.json())
+        .then(json => {
+          this.records = json.data;
+          this.initChart();
+        });
+      
+    },
     initChart: function() {
       let echarts = require("echarts");
-      console.log(document.getElementById("chart-container"));
       var myChart = echarts.init(document.getElementById("chart-container"));
       myChart.setOption({
         tooltip: {},
         yAxis: {},
         xAxis: {
-          data: [
-            5,
-            20,
-            36,
-            10,
-            10,
-            20,
-            20,
-            36,
-            10,
-            10,
-            36,
-            20,
-            36,
-            10,
-            10,
-            10,
-            10,
-            20
-          ]
+          data: this.records.map(record => record.value)
         },
         series: [
           {
             name: "Amount",
             type: "bar",
-            data: [
-              5,
-              20,
-              36,
-              10,
-              10,
-              20,
-              20,
-              36,
-              10,
-              10,
-              36,
-              20,
-              36,
-              10,
-              10,
-              10,
-              10,
-              20
-            ]
+            data: this.records.map(record => record.value)
           }
         ]
       });
     }
   },
   mounted() {
-    this.initChart();
+    this.init();
   }
 };
 </script>
