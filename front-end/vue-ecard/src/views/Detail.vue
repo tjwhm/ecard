@@ -3,6 +3,7 @@
     <Header subheadings="Detail"/>
     <div style="height: 20px;"/>
     <div id="chart-container"></div>
+    <DataTable sourceUrl="https://api.myjson.com/bins/193so2"></DataTable>
     <div style="height: 70px;"/>
     <router-link to="/home"><button>返回 Home</button></router-link>
     <div style="height: 50px;"/>
@@ -14,12 +15,14 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import DataTable from "@/components/DataTable.vue";
 
 export default {
   name: "detail",
   components: {
     Header,
-    Footer
+    Footer,
+    DataTable
   },
   methods: {
     initChart: function() {
