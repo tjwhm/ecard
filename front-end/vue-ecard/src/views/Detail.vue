@@ -42,7 +42,6 @@ export default {
           this.records = json.data;
           this.initChart();
         });
-      
     },
     initChart: function() {
       let echarts = require("echarts");
