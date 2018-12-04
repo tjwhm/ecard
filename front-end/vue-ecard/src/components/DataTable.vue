@@ -25,11 +25,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .table-row {
   padding: 12px;
   margin: 6px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-around;
   text-align: center;
@@ -38,7 +37,9 @@ export default {
     display: inline-block;
   }
 
-  .b, .c, .d {
+  .b,
+  .c,
+  .d {
     width: 20%;
   }
 
@@ -46,5 +47,4 @@ export default {
     width: 40%;
   }
 }
-
 </style>

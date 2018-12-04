@@ -10,13 +10,12 @@ export default {
   name: "TitleCluster",
   props: {
     titleZh: String,
-    titleEn: String,
+    titleEn: String
   }
 };
 </script>
 
 <style scoped lang="scss">
-
 .title-cluster {
   margin: 25px 0 15px;
 }
@@ -24,7 +23,6 @@ export default {
 .title-en {
   text-transform: uppercase;
   font-size: 26px;
-  
 }
 
 .title-en {
@@ -34,5 +32,4 @@ export default {
   margin-top: 5px;
   font-weight: bold;
 }
-
 </style>
