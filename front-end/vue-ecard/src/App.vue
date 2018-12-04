@@ -55,25 +55,47 @@ a:hover {
   text-decoration: none;
 }
 
+@mixin sized-input() {
+  padding: 8px 15px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
 button {
+  @include sized-input();
   outline: none;
   box-shadow: none;
   background: none;
   border: none;
-
   background-color: #eee;
   color: #141414;
-  padding: 8px 15px;
-  font-weight: bold;
   cursor: pointer;
   margin-right: 25px;
   min-width: 120px;
-  font-size: 20px;
 }
 
 button:hover {
   background-color: rgba(255, 255, 255, 0.03);
   color: #eee;
+}
+
+input {
+  @include sized-input();
+  border: none;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  color: #eee;
+}
+
+input:focus {
+  outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 .font-condensed {

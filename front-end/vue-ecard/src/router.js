@@ -3,6 +3,9 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Detail from "./views/Detail.vue";
 import Starter from "./views/Starter.vue";
+import Merchant from "./views/Merchant.vue";
+import BusinessStat from "./views/BusinessStat.vue";
+import Admin from "./views/Admin.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -21,6 +24,21 @@ export default new Router({
       path: "/detail",
       name: "detail",
       component: Detail
+    },
+    {
+      path: "/merchant",
+      name: "merchant",
+      component: Merchant
+    },
+    {
+      path: "/business-stat",
+      name: "businessStat",
+      component: BusinessStat
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: Admin
     },
     {
       path: "/about",
