@@ -11,7 +11,7 @@
     <div style="height: 20px;"/>
     <TitleCluster title-zh="发起交易" title-en="Record New Deal"></TitleCluster>
     <div>
-      <input type="number" placeholder="消费者帐号">
+      <input type="text" placeholder="消费者帐号">
       <input type="number" placeholder="本次交易额">
       <button>确认扣费</button>
     </div>
@@ -89,7 +89,5 @@ export default {
 #chart-container {
   height: 300px;
 }
-input {
-  margin-right: 10px;
-}
+
 </style>

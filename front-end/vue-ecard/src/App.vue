@@ -98,6 +98,10 @@ input::-webkit-inner-spin-button {
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
+input {
+  margin-right: 10px;
+}
+
 .font-condensed {
   font-family: "Directors", "FF Din", "Franklin Gothic", "等线", "微软雅黑",
     sans-serif;
