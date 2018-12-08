@@ -4,8 +4,8 @@
     <div style="height: 20px;"/>
     <div class="flex-cashblock-container">
       <CashBlock v-if="metadata" title-zh="当前资产" title-en="Current Balance" :amount="metadata.currentBalance"/>
-      <CashBlock v-if="metadata" title-zh="上次交易额" title-en="Last Earnings" :amount="metadata.lastEarnings"/>
-      <CashBlock v-if="metadata" title-zh="过去 30 天交易额" title-en="Recent Earnings" :amount="metadata.recentEarnings"/>
+      <CashBlock v-if="metadata" title-zh="上次交易额" title-en="Last Earnings" :amount="metadata.lastAmount"/>
+      <CashBlock v-if="metadata" title-zh="过去 30 天交易额" title-en="Recent Earnings" :amount="metadata.recentTotal"/>
       <CashBlock v-if="metadata" title-zh="过去 30 天日均" title-en="Daily Average" :amount="metadata.dailyAverage"/>
     </div>
     <div style="height: 20px;"/>
@@ -54,9 +54,10 @@ export default {
       fetch(sourceUrl)
         .then(response => response.json())
         .then(json => {
-          this.records = json.data;
-          this.initMetadata();
-          this.initChart();
+          this.records = json.data
+          let mt = require("@/methods/mt.js")
+          this.metadata = mt.toMetadata(this.records)
+          this.initChart()
         });
     },
     initChart: function() {
@@ -76,14 +77,6 @@ export default {
           }
         ]
       });
-    },
-    initMetadata: function() {
-      this.metadata = {};
-      this.metadata["currentBalance"] = this.records[0].latest_balance.toFixed(2);
-      this.metadata["lastEarnings"] = this.records[0].value.toFixed(2);
-      let sumAmount = this.records.map(record => record.value).reduce((current, accu) => current+accu, 0);
-      this.metadata["recentEarnings"] = sumAmount.toFixed(2);
-      this.metadata["dailyAverage"] = (sumAmount / this.records.length).toFixed(2);
     }
   },
   mounted() {
