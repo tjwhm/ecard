@@ -3,19 +3,21 @@
     <Header subheadings="Merchant Index"/>
     <div style="height: 20px;"/>
     <div class="flex-cashblock-container">
-      <CashBlock title-zh="当前资产" title-en="Current Balance" amount="20.90"/>
-      <CashBlock title-zh="上次交易额" title-en="Last Earnings" amount="12.00"/>
-      <CashBlock title-zh="过去 30 天交易额" title-en="Recent Earnings" amount="893.75"/>
-      <CashBlock title-zh="过去 30 天日均" title-en="Daily Average" amount="40.77"/>
+      <CashBlock v-if="metadata" title-zh="当前资产" title-en="Current Balance" :amount="metadata.currentBalance"/>
+      <CashBlock v-if="metadata" title-zh="上次交易额" title-en="Last Earnings" :amount="metadata.lastEarnings"/>
+      <CashBlock v-if="metadata" title-zh="过去 30 天交易额" title-en="Recent Earnings" :amount="metadata.recentEarnings"/>
+      <CashBlock v-if="metadata" title-zh="过去 30 天日均" title-en="Daily Average" :amount="metadata.dailyAverage"/>
     </div>
-    <TitleCluster title-zh="消费趋势" title-en="Recent Spendings Chart"></TitleCluster>
-    <div id="chart-container"></div>
+    <div style="height: 20px;"/>
     <TitleCluster title-zh="发起交易" title-en="Record New Deal"></TitleCluster>
     <div>
       <input type="number" placeholder="消费者帐号">
       <input type="number" placeholder="本次交易额">
       <button>确认扣费</button>
     </div>
+    <div style="height: 50px;"/>
+    <TitleCluster title-zh="消费趋势" title-en="Recent Spendings Chart"></TitleCluster>
+    <div id="chart-container"></div>
     <TitleCluster title-zh="流水详单" title-en="Recent Spendings Details"></TitleCluster>
     <DataTable :records="this.records"></DataTable>
     <div style="height: 50px;"/>
@@ -42,7 +44,8 @@ export default {
   },
   data() {
     return {
-      records: []
+      records: undefined,
+      metadata: undefined
     };
   },
   methods: {
@@ -52,6 +55,7 @@ export default {
         .then(response => response.json())
         .then(json => {
           this.records = json.data;
+          this.initMetadata();
           this.initChart();
         });
     },
@@ -72,6 +76,14 @@ export default {
           }
         ]
       });
+    },
+    initMetadata: function() {
+      this.metadata = {};
+      this.metadata["currentBalance"] = this.records[0].latest_balance.toFixed(2);
+      this.metadata["lastEarnings"] = this.records[0].value.toFixed(2);
+      let sumAmount = this.records.map(record => record.value).reduce((current, accu) => current+accu, 0);
+      this.metadata["recentEarnings"] = sumAmount.toFixed(2);
+      this.metadata["dailyAverage"] = (sumAmount / this.records.length).toFixed(2);
     }
   },
   mounted() {
