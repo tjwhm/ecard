@@ -72,15 +72,21 @@ button {
   cursor: pointer;
   margin-right: 25px;
   min-width: 120px;
+  display: inline-block;
 }
 
 button:hover {
-  background-color: rgba(255, 255, 255, 0.03);
-  color: #eee;
+  transform: translateY(3px);
+  opacity: 0.9;
+}
+
+button:active {
+  transform: translateY(3px) scale(1.03);
 }
 
 input {
   @include sized-input();
+  font-size: 18px;
   border: none;
   border-bottom: 1px solid currentColor;
   background: none;
@@ -99,7 +105,7 @@ input::-webkit-inner-spin-button {
 }
 
 input {
-  margin-right: 10px;
+  margin-right: 30px;
 }
 
 .font-condensed {

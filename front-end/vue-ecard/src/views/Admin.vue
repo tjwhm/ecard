@@ -16,6 +16,14 @@
       <button>确认提现</button>
     </div>
     <div style="height: 50px;"/>
+    <TitleCluster title-zh="查询用户流水" title-en="Spending Details Lookup"></TitleCluster>
+    <div>
+      <input type="text" placeholder="用户帐号">
+      <button v-on:click="fetchLookupRequest">查询近期活动</button>
+    </div>
+    <div style="height: 50px;"/>
+    <DataTable :records="this.records"></DataTable>
+    <div style="height: 50px;"/>
     <TitleCluster title-zh="补办记录" title-en="Record replacement"></TitleCluster>
     <div>
       <input type="text" placeholder="消费者帐号">
@@ -31,13 +39,34 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import TitleCluster from "@/components/TitleCluster.vue";
+import DataTable from "@/components/DataTable.vue";
 
 export default {
   name: "starter",
   components: {
     Header,
     Footer,
+    DataTable,
     TitleCluster
+  },
+  data() {
+    return {
+      records: undefined,
+      metadata: undefined
+    };
+  },
+  methods: {
+    fetchLookupRequest: function() {
+      let sourceUrl = "https://api.myjson.com/bins/193so2";
+      fetch(sourceUrl)
+        .then(response => response.json())
+        .then(json => {
+          this.records = json.data
+        });
+    }
+  },
+  mounted() {
+
   }
 };
 </script>
