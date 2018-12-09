@@ -43,8 +43,8 @@ export default {
         .then(response => response.json())
         .then(json => {
           this.records = json.data;
-          let mt = require("@/methods/mt.js")
-          this.metadata = mt.toMetadata(this.records)
+          let mt = require("@/methods/mt.js");
+          this.metadata = mt.toMetadata(this.records);
         });
     }
   },

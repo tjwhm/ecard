@@ -54,10 +54,10 @@ export default {
       fetch(sourceUrl)
         .then(response => response.json())
         .then(json => {
-          this.records = json.data
-          let mt = require("@/methods/mt.js")
-          this.metadata = mt.toMetadata(this.records)
-          this.initChart()
+          this.records = json.data;
+          let mt = require("@/methods/mt.js");
+          this.metadata = mt.toMetadata(this.records);
+          this.initChart();
         });
     },
     initChart: function() {
@@ -89,5 +89,4 @@ export default {
 #chart-container {
   height: 300px;
 }
-
 </style>

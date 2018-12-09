@@ -61,13 +61,11 @@ export default {
       fetch(sourceUrl)
         .then(response => response.json())
         .then(json => {
-          this.records = json.data
+          this.records = json.data;
         });
     }
   },
-  mounted() {
-
-  }
+  mounted() {}
 };
 </script>
 
