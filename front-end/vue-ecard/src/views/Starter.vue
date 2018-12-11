@@ -2,7 +2,7 @@
   <div class="starter">
     <Header subheadings="Login"/>
     <div style="height: 70px;"/>
-    <router-link to="/home"><button>登录并前往主页</button></router-link>
+    <router-link to="/home"><button>使用天外天帐号登录</button></router-link>
     <div style="height: 50px;"/>
     <Footer />
   </div>

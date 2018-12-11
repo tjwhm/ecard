@@ -1,0 +1,90 @@
+{
+  "error_code": 0,
+  "message": "message",
+  "data": [
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 19.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 2.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    },
+    {
+      "timestamp": 22446566,
+      "record_type": 1,
+      "value": 12.5,
+      "location": "兰园一楼",
+      "latest_balance": 36.0
+    }
+  ]
+}

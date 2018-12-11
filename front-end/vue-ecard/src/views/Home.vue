@@ -3,10 +3,10 @@
     <Header subheadings="Home"/>
     <div style="height: 20px;"/>
     <div class="flex-cashblock-container">
-      <CashBlock title-zh="当前余额" title-en="Current Balance" amount="20.90"/>
-      <CashBlock title-zh="上次消费" title-en="Last Transaction" amount="12.00"/>
-      <CashBlock title-zh="过去 30 天消费" title-en="Recent Spendings" amount="893.75"/>
-      <CashBlock title-zh="过去 30 天日均" title-en="Daily Average" amount="40.77"/>
+      <CashBlock v-if="metadata" title-zh="当前余额" title-en="Current Balance" :amount="metadata.currentBalance"/>
+      <CashBlock v-if="metadata" title-zh="上次消费" title-en="Last Transaction" :amount="metadata.lastAmount"/>
+      <CashBlock v-if="metadata" title-zh="过去 30 天消费" title-en="Recent Spendings" :amount="metadata.recentTotal"/>
+      <CashBlock v-if="metadata" title-zh="过去 30 天日均" title-en="Daily Average" :amount="metadata.dailyAverage"/>
     </div>
     <div style="height: 70px;"/>
     <router-link to="/detail"><button>详单查询</button></router-link>
@@ -29,6 +29,27 @@ export default {
     Header,
     CashBlock,
     Footer
+  },
+  data() {
+    return {
+      records: undefined,
+      metadata: undefined
+    };
+  },
+  methods: {
+    init: function() {
+      let sourceUrl = "https://api.myjson.com/bins/193so2";
+      fetch(sourceUrl)
+        .then(response => response.json())
+        .then(json => {
+          this.records = json.data;
+          let mt = require("@/methods/mt.js");
+          this.metadata = mt.toMetadata(this.records);
+        });
+    }
+  },
+  mounted() {
+    this.init();
   }
 };
 </script>
