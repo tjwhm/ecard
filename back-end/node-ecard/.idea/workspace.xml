@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8bf3dd5e-c1c5-4f78-8fc0-db1bc15fd8a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/db/db.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/dberror.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/middlewares/checkoutLogin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" />
-    </list>
+    <list default="true" id="8bf3dd5e-c1c5-4f78-8fc0-db1bc15fd8a7" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -28,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="115" column="18" lean-forward="true" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+            <state relative-caret-position="246">
+              <caret line="212" column="3" lean-forward="true" selection-start-line="212" selection-start-column="3" selection-end-line="212" selection-end-column="3" />
               <folding>
                 <element signature="e#216#264#0" />
                 <element signature="e#359#424#0" />
@@ -42,15 +30,17 @@
                 <element signature="e#527#887#0" />
                 <element signature="e#891#909#0" />
                 <element signature="e#962#966#0" />
-                <element signature="e#970#992#0" />
+                <element signature="e#2379#2404#0" />
+                <element signature="e#2739#4405#0" />
                 <element signature="e#2778#4862#0" />
                 <element signature="e#2837#3030#0" />
+                <element signature="e#3029#3269#0" />
+                <element signature="e#3474#3571#0" />
+                <element signature="e#3830#3927#0" />
                 <element signature="e#3284#3611#0" />
                 <element signature="e#3394#3426#0" />
                 <element signature="e#3731#3763#0" />
-                <element signature="e#4080#4320#0" />
-                <element signature="e#4510#4607#0" />
-                <element signature="e#4851#4948#0" />
+                <element signature="e#5031#5253#0" />
                 <element signature="e#1047#1064#0" />
                 <element signature="e#1111#1115#0" />
                 <element signature="e#1119#1139#0" />
@@ -259,12 +249,12 @@
       <workItem from="1544333097832" duration="385000" />
       <workItem from="1544333557609" duration="12122000" />
       <workItem from="1544453616115" duration="4192000" />
-      <workItem from="1544511702909" duration="19444000" />
+      <workItem from="1544511702909" duration="19694000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52558000" />
+    <option name="totallyTimeSpent" value="52808000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -485,8 +475,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="115" column="18" lean-forward="true" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+        <state relative-caret-position="246">
+          <caret line="212" column="3" lean-forward="true" selection-start-line="212" selection-start-column="3" selection-end-line="212" selection-end-column="3" />
           <folding>
             <element signature="e#216#264#0" />
             <element signature="e#359#424#0" />
@@ -499,15 +489,17 @@
             <element signature="e#527#887#0" />
             <element signature="e#891#909#0" />
             <element signature="e#962#966#0" />
-            <element signature="e#970#992#0" />
+            <element signature="e#2379#2404#0" />
+            <element signature="e#2739#4405#0" />
             <element signature="e#2778#4862#0" />
             <element signature="e#2837#3030#0" />
+            <element signature="e#3029#3269#0" />
+            <element signature="e#3474#3571#0" />
+            <element signature="e#3830#3927#0" />
             <element signature="e#3284#3611#0" />
             <element signature="e#3394#3426#0" />
             <element signature="e#3731#3763#0" />
-            <element signature="e#4080#4320#0" />
-            <element signature="e#4510#4607#0" />
-            <element signature="e#4851#4948#0" />
+            <element signature="e#5031#5253#0" />
             <element signature="e#1047#1064#0" />
             <element signature="e#1111#1115#0" />
             <element signature="e#1119#1139#0" />
