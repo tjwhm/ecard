@@ -17,7 +17,7 @@ router.get('/mysql-test', function(req, res, next) {
             console.log(err);
         }
         connection.query('select * from user', function (err, result) {
-            connection.release;
+            connection.release();
             if(err) {
             }else {
             }
@@ -31,7 +31,7 @@ router.get('/mysql-test', function(req, res, next) {
 /**
  * 用户登出的api
  */
-router.get('logout', function (req, res, next) {
+router.get('/logout', function (req, res, next) {
 
 });
 
@@ -75,29 +75,56 @@ router.get('/userinfo', function (req, res, next) {
  */
 router.get('/records', function (req, res, next) {
   // var error_code = 0;
-  var data;
-  if(req.query.userid) {
-      data = {
-          "error_code":0,
-          "message":"测试成功",
-          "data":{
-              "userid":req.query.userid
-          }
-      };
-  } else {
-      data = {
-          "error_code":1,
-          "message":"哈哈哈",
-          "data":{}
-      };
-  }
-  res.send(JSON.stringify(data));
-});
+  var card_id = req.query.card_id;
+  var timestamp;
+  timestamp = new Date();
+  timestamp = timestamp.getTime();
+  timestamp = timestamp - (86400 * 30);
+  pool.getConnection(function (err, connection) {
+      if(card_id) {
+          connection.query(
+              'select type, value, location, latest_balance, created_at from record where card_id = ? and created_at > ? order by id desc',
+              [card_id, timestamp],
+              function (err, result) {
+                  connection.release();
+                  dbError.sqlError(res, err);
+                  for(i in result) {
+                      result[i].record_type = type;
+                      delete  result[i].type;
+                      result[i].timestamp = result[i].created_at;
+                      delete result[i].created_at;
+                  }
+                  res.send(JSON.stringify({
+                      "error_code": 0,
+                      "message": "用户近30天的流水",
+                      "data": result
+                  }));
 
-/**
- * 消费者的卡挂失
- */
-router.put('card_status', function (req, res, next) {
+              }
+          );
+      } else {
+          connection.query(
+              'select type, value, location, latest_balance, created_at from record where card_id = ? and created_at order by id desc',
+              [req.session.user_number, timestamp],
+              function (err, result) {
+                  connection.release();
+                  dbError.sqlError(res, err);
+                  for(i in result) {
+                      result[i].record_type = type;
+                      delete  result[i].type;
+                      result[i].timestamp = result[i].created_at;
+                      delete result[i].created_at;
+                  }
+                  res.send(JSON.stringify({
+                      "error_code": 0,
+                      "message": "用户近30天的流水",
+                      "data": result
+                  }));
+
+              }
+          );
+      }
+  });
 
 });
 
@@ -185,6 +212,7 @@ router.post('/deal', function (req, res, next) {
             }
         );
 
+        //组后返回用户的具体信息
         res.send(JSON.stringify({
             "error_code": 0,
             "message": "本次消费情况",
@@ -196,30 +224,137 @@ router.post('/deal', function (req, res, next) {
                 "latest_balance": latest_balance
             }
         }));
-
-
     });
 });
 
 /**
- * 查询用户信息
+ * ok 查询用户信息
  */
-router.get('users', function (req, res, next) {
+router.get('/users', function (req, res, next) {
+    var user_type = req.query.user_type;
 
+    pool.getConnection(function (err, connection) {
+        if(err) {
+            dbError.connectionError(res, err);
+        }
+        connection.query(
+            'select user_name, user_number, avatar, balance, card_status from user where type = ?',
+            [user_type],
+            function (err, result) {
+                connection.release();
+                if(err) {
+                    dbError.sqlError(res, err);
+                }
+                for(var i in result){
+                    result[i].avatar_url = (result[i].avatar == null)?null:'https://i.twtstudio.com'+result[i].avatar;
+                    result[i].user_type = user_type;
+                    delete result[i].avatar;
+                }
+                res.send(JSON.stringify({
+                    "error_code": 0,
+                    "message": "用户的具体信息",
+                    "data": result
+                }))
+            }
+        )
+    })
 });
 
 /**
- * 充值和提现的api
+ * ok 充值和提现的api
  */
 router.put('balnce', function (req, res, next) {
-    
+    var change_type = req.body.change_type;
+    var value = req.body.value;
+    var card_id = req.body.card_id;
+
+    pool.getConnection(function (err, connection) {
+        if(err) {
+            dbError.connectionError(res, err);
+        }
+
+        connection.query(
+            'select balance from user where user_number = ?',
+            [card_id],
+            function (err, result) {
+                connection.release();
+                if(err) {
+                    dbError.sqlError(res, err);
+                }
+                var latest_balance;
+                if(change_type) {
+                    if (value > result[0].balance) {
+                        res.send(JSON.stringify({
+                            "error_code": -1,
+                            "message": "金额不足",
+                        }));
+                    } else {
+                        latest_balance = result[0].balance - value;
+                    }
+                } else {
+                    latest_balance = result[0].balance + value;
+                }
+
+                connection.query(
+                    'update user set balance = ? where user_number = ?',
+                    [latest_balance, card_id],
+                    function (err) {
+                        connection.release();
+                        dbError.sqlError(res, err);
+                    }
+                );
+
+                connection.query(
+                    'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
+                    [card_id, !change_type, value, req.session.location, latest_balance],
+                    function (err) {
+                        connection.release();
+                        dbError.sqlError(res, err);
+                    }
+                );
+
+                res.send(JSON.stringify({
+                    "error_code":0,
+                    "message": "成功"
+                }));
+            }
+        );
+    });
 });
 
 /**
- * 补办校园卡
+ * ok 补办校园卡
  */
-router.put('card_status', function (req, res, next) {
+router.put('/card_status', function (req, res, next) {
+    var change_type = req.body.change_type;
+    var card_id = req.body.card_id;
 
+    pool.getConnection(function (err, connection) {
+        if(err) {
+            dbError.connectionError(res, err);
+        }
+
+        connection.query(
+            'update user set card_status = ? where  user_number = ?',
+            [change_type, card_id],
+            function (err) {
+                connection.release();
+                if(err) {
+                   dbError.sqlError(res, err);
+                }
+                var message;
+                if(change_type) {
+                    message = "挂失成功";
+                } else {
+                    message = "解挂成功";
+                }
+                res.send(JSON.stringify({
+                    "error_code":0,
+                    "message": message
+                }));
+            }
+        );
+    });
 });
 
 module.exports = router;

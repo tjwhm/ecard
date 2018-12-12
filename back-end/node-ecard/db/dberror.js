@@ -23,5 +23,4 @@ class DbError {
     };
 }
 
-
 module.exports = DbError;

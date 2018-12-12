@@ -13,6 +13,5 @@ module.exports = (req,res,next)=>{
         "user_number" : 3016218088,
         "location": "平园超市"
     };
-    console.log(req.session.user_number);
     next();
 };
