@@ -11,7 +11,7 @@
     <div style="height: 70px;"/>
     <router-link to="/detail"><button>详单查询</button></router-link>
     <button>挂失</button>
-    <router-link to="/about"><button>帮助</button></router-link>
+    <router-link to="/about"><button>帮助文档</button></router-link>
     <div style="height: 50px;"/>
     <Footer />
   </div>
