@@ -2,6 +2,9 @@
   <div class="starter">
     <Header subheadings="Login"/>
     <div style="height: 70px;"/>
+    <input type="text" placeholder="用户名">
+    <input type="password" placeholder="密码">
+    <div style="height: 30px;"/>
     <router-link to="/home"><button>使用天外天帐号登录</button></router-link>
     <div style="height: 50px;"/>
     <Footer />
@@ -23,4 +26,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+input {
+  display: block;
+  margin: 0px 0 30px;
+}
+
 </style>
