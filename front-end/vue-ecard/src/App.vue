@@ -9,8 +9,24 @@
     <div class="fixed-width-container">
       <router-view/>
     </div>
+    <!-- Put it at the end of App.vue -->
+    <dialogs-wrapper></dialogs-wrapper>
   </div>
+
 </template>
+
+<script>
+import Vue from 'vue'; 
+import * as ModalDialogs from 'vue-modal-dialogs'
+Vue.use(ModalDialogs)
+
+export default {
+  name: "app",
+  components: {
+    ModalDialogs
+  }
+};
+</script>
 
 <style lang="scss">
 @font-face {
