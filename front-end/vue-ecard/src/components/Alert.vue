@@ -1,14 +1,13 @@
 <template>
 
-    <div class="message-box dialog-mask" @click="$close">
+    <div class="alert dialog-mask" @click="$close">
     <div class="dialog-content">
       <h1 class="font-condensed">{{ title }}</h1>
       <div class="dialog-body">
         <p>{{ content }}</p>
       </div>
       <footer>
-        <button type="text" size="mini" @click="$close(true)">确认</button>
-        <button type="text" size="mini" @click="$close(false)">取消</button>
+        <button type="text" size="mini" @click="$close">{{ buttonText }}</button>
       </footer>
     </div>
   </div>

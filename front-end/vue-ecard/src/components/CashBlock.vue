@@ -1,9 +1,11 @@
 <template>
+  <transition name="fade">
     <div class="cashblock">
         <div class="title-zh font-condensed">{{ titleZh }}</div>
         <div class="title-en font-condensed">{{ titleEn }}</div>
         <div class="amount font-condensed">{{ amount }}</div>
     </div>
+  </transition>
 </template>
 
 <script>

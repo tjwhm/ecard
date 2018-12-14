@@ -71,6 +71,16 @@ a:hover {
   text-decoration: none;
 }
 
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
 @mixin sized-input() {
   padding: 8px 15px;
   font-weight: bold;
