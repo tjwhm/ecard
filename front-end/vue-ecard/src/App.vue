@@ -142,4 +142,26 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 980px) {
+  .fixed-width-container {
+    width: 87%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .flex-cashblock-container {
+    flex-wrap: wrap;
+    .cashblock {
+      margin-right: 20px;
+    }
+  }
+
+  input,
+  button {
+    margin-bottom: 20px;
+  }
+}
 </style>

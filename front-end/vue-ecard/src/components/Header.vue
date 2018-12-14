@@ -57,4 +57,12 @@ hr.header-divider {
   display: inline-block;
   margin-top: 80px;
 }
+
+@media screen and (max-width: 980px) {
+  .logo-ambient {
+    width: 400px;
+    left: -130px;
+    top: -110px;
+  }
+}
 </style>
