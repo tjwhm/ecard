@@ -10,7 +10,8 @@
     </div>
     <div style="height: 70px;"/>
     <router-link to="/detail"><button>详单查询</button></router-link>
-    <button>挂失</button>
+    <button @click="showModal">挂失</button>
+    <Modal v-show="reportLossModalVisible" @close="closeModal"/>
     <router-link to="/about"><button>帮助文档</button></router-link>
     <div style="height: 50px;"/>
     <Footer />
@@ -22,18 +23,21 @@
 import Header from "@/components/Header.vue";
 import CashBlock from "@/components/CashBlock.vue";
 import Footer from "@/components/Footer.vue";
+import Modal from "@/components/Modal.vue";
 
 export default {
   name: "home",
   components: {
     Header,
     CashBlock,
-    Footer
+    Footer,
+    Modal
   },
   data() {
     return {
       records: undefined,
-      metadata: undefined
+      metadata: undefined,
+      reportLossModalVisible: false
     };
   },
   methods: {
@@ -46,6 +50,12 @@ export default {
           let mt = require("@/methods/mt.js");
           this.metadata = mt.toMetadata(this.records);
         });
+    },
+    showModal() {
+      this.reportLossModalVisible = true;
+    },
+    closeModal() {
+      this.reportLossModalVisible = false;
     }
   },
   mounted() {
