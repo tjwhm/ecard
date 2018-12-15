@@ -23,25 +23,23 @@ import Header from "@/components/Header.vue";
 import CashBlock from "@/components/CashBlock.vue";
 import Footer from "@/components/Footer.vue";
 
-import Alert from '@/components/Alert.vue'
-import MessageBox from '@/components/MessageBox.vue'
-import { create } from 'vue-modal-dialogs'
-const messageBox = create(MessageBox, 'title', 'content')
-const alertBox = create(Alert, 'title', 'content', 'buttonText')
+import Alert from "@/components/Alert.vue";
+import MessageBox from "@/components/MessageBox.vue";
+import { create } from "vue-modal-dialogs";
+const messageBox = create(MessageBox, "title", "content");
+const alertBox = create(Alert, "title", "content", "buttonText");
 
 export default {
   name: "home",
   components: {
     Header,
     CashBlock,
-    Footer,
-    Alert,
-    MessageBox
+    Footer
   },
   data() {
     return {
       records: undefined,
-      metadata: undefined,
+      metadata: undefined
     };
   },
   methods: {
@@ -56,11 +54,19 @@ export default {
         });
     },
     async showReportLossConfirm() {
-      if (await messageBox("Confirm", "是否确定挂失？为安全考虑，挂失后卡片将暂时无法消费。若需解挂，请向财务处申请。")) {
-        console.log("Confirmed")
-        alertBox("Succeed", "挂失成功", "关闭")
-      } else {
-        
+      if (
+        await messageBox(
+          "Confirm",
+          "是否确定挂失？为安全考虑，挂失后卡片将暂时无法消费。若需解挂，请向财务处申请。"
+        )
+      ) {
+        this.$http
+          .put("card_status", { card_status: 1 })
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);
+            alertBox("Succeed", "挂失成功", "关闭");
+          });
       }
     }
   },

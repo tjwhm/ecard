@@ -1,30 +1,20 @@
 <template>
   <div id="app">
-    <!--
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    -->
     <div class="fixed-width-container">
       <router-view/>
     </div>
-    <!-- Put it at the end of App.vue -->
     <dialogs-wrapper></dialogs-wrapper>
   </div>
 
 </template>
 
 <script>
-import Vue from 'vue'; 
-import * as ModalDialogs from 'vue-modal-dialogs'
-Vue.use(ModalDialogs)
+import Vue from "vue";
+import * as ModalDialogs from "vue-modal-dialogs";
+Vue.use(ModalDialogs);
 
 export default {
-  name: "app",
-  components: {
-    ModalDialogs
-  }
+  name: "app"
 };
 </script>
 
@@ -66,7 +56,8 @@ a {
   color: inherit;
 }
 
-a:hover {
+a:hover,
+.clickable:hover {
   opacity: 0.8;
   text-decoration: none;
 }

@@ -11,9 +11,9 @@
     <div style="height: 20px;"/>
     <TitleCluster title-zh="发起交易" title-en="Record New Deal"></TitleCluster>
     <div>
-      <input type="text" placeholder="消费者帐号">
-      <input type="number" placeholder="本次交易额">
-      <button>确认扣费</button>
+      <input v-model.number="dealInfo.card_id" type="text" placeholder="消费者帐号">
+      <input v-model.number="dealInfo.value" type="number" placeholder="本次交易额">
+      <button @click="newDeal">确认扣费</button>
     </div>
     <div style="height: 50px;"/>
     <TitleCluster title-zh="消费趋势" title-en="Recent Spendings Chart"></TitleCluster>
@@ -33,6 +33,12 @@ import Footer from "@/components/Footer.vue";
 import DataTable from "@/components/DataTable.vue";
 import TitleCluster from "@/components/TitleCluster.vue";
 
+import Alert from "@/components/Alert.vue";
+import MessageBox from "@/components/MessageBox.vue";
+import { create } from "vue-modal-dialogs";
+const messageBox = create(MessageBox, "title", "content");
+const alertBox = create(Alert, "title", "content", "buttonText");
+
 export default {
   name: "merchant",
   components: {
@@ -45,7 +51,8 @@ export default {
   data() {
     return {
       records: undefined,
-      metadata: undefined
+      metadata: undefined,
+      dealInfo: {}
     };
   },
   methods: {
@@ -77,6 +84,17 @@ export default {
           }
         ]
       });
+    },
+    async newDeal() {
+      if (await messageBox("Confirm", "是否确认交易？")) {
+        this.$http
+          .post("deal", this.dealInfo)
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);
+            alertBox("Succeed", "交易成功", "关闭");
+          });
+      }
     }
   },
   mounted() {

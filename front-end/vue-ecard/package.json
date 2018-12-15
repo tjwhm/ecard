@@ -11,6 +11,7 @@
     "echarts": "^4.2.0-rc.2",
     "vue": "^2.5.17",
     "vue-modal-dialogs": "^3.0.0",
+    "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

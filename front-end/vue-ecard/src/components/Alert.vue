@@ -15,7 +15,6 @@
 </template>
 
 <style scoped lang="scss">
-
 .dialog-mask {
   position: fixed;
   top: 0;
@@ -25,7 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0,0,0,0.85);
+  background-color: rgba(0, 0, 0, 0.85);
   color: #eee;
   text-align: center;
 }
@@ -46,5 +45,4 @@ h1 {
 p {
   margin: 10px 0 30px;
 }
-
 </style>

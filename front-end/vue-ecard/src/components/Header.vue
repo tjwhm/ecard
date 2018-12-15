@@ -2,10 +2,13 @@
   <div class="header-container">
     <div class="header-row-container">
       <img class="logo-ambient" src="../assets/hand-with-card.svg">
-      <img class="ecard-logo" alt="Vue logo" src="../assets/logo.svg">
+      <router-link to="/">
+        <img class="ecard-logo" alt="Vue logo" src="../assets/logo.svg">
+      </router-link>
       <small class="subheadings font-condensed">{{ subheadings }}</small>
-      <div class="header-icons right">
-            
+      <div @click="showLogoutConfirm" class="header-icons right clickable">
+        <img class="account-icon" src="../assets/account.svg">
+        <span v-if="username" class="account-text">{{ username }}</span>
       </div>
     </div>
     <hr class="header-divider"/>
@@ -13,18 +16,50 @@
 </template>
 
 <script>
+import MessageBox from "@/components/MessageBox.vue";
+import { create } from "vue-modal-dialogs";
+const messageBox = create(MessageBox, "title", "content");
+
 export default {
   name: "Header",
   props: {
     subheadings: String
+  },
+  data() {
+    return {
+      username: undefined
+    };
+  },
+  methods: {
+    getUserInfo: function() {
+      this.$http
+        .get("userinfo")
+        .then(response => response.json())
+        .then(json => {
+          this.username = json.data.username;
+        });
+    },
+    async showLogoutConfirm() {
+      if (await messageBox("Confirm", "是否确认登出？")) {
+        this.$http
+          .get("logout")
+          .then(response => {
+            return response.json();
+          })
+          .then(json => {
+            console.log(json);
+            this.$router.push("starter");
+          });
+      }
+    }
+  },
+  mounted() {
+    this.getUserInfo();
   }
 };
 </script>
 
 <style scoped lang="scss">
-.header-container {
-}
-
 .header-row-container {
   position: relative;
 }
@@ -56,6 +91,24 @@ hr.header-divider {
   background-color: #eee;
   display: inline-block;
   margin-top: 80px;
+}
+
+.header-icons {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.account-icon {
+  width: 30px;
+  margin-right: 5px;
+  vertical-align: bottom;
+}
+
+.account-text {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 @media screen and (max-width: 980px) {
