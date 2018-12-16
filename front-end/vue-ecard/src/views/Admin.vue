@@ -41,6 +41,12 @@ import Footer from "@/components/Footer.vue";
 import TitleCluster from "@/components/TitleCluster.vue";
 import DataTable from "@/components/DataTable.vue";
 
+import Alert from "@/components/Alert.vue";
+import MessageBox from "@/components/MessageBox.vue";
+import { create } from "vue-modal-dialogs";
+const messageBox = create(MessageBox, "title", "content");
+const alertBox = create(Alert, "title", "content", "buttonText");
+
 export default {
   name: "starter",
   components: {
@@ -63,7 +69,7 @@ export default {
     async confirmTopup() {
       if (await messageBox("Confirm", "是否确认充值？")) {
         this.$http
-          .post("balance", topupInfo)
+          .post("balance", this.topupInfo)
           .then(response => response.json())
           .then(json => {
             console.log(json);
@@ -74,7 +80,7 @@ export default {
     async confirmWithdraw() {
       if (await messageBox("Confirm", "是否确认为商家提现？")) {
         this.$http
-          .post("balance", withdrawInfo)
+          .post("balance", this.withdrawInfo)
           .then(response => response.json())
           .then(json => {
             console.log(json);
@@ -83,7 +89,8 @@ export default {
       }
     },
     fetchLookupRequest() {
-      this.$http.get('records', recordLookupInfo)
+      this.$http
+        .get("records", this.recordLookupInfo)
         .then(response => response.json())
         .then(json => {
           this.records = json.data;
@@ -92,14 +99,14 @@ export default {
     async confirmReactivation() {
       if (await messageBox("Confirm", "是否确认补办完成并解挂？")) {
         this.$http
-          .put("card_status", reactivateInfo)
+          .put("card_status", this.reactivateInfo)
           .then(response => response.json())
           .then(json => {
             console.log(json);
             alertBox("Succeed", "解挂成功", "关闭");
           });
       }
-    },
+    }
   },
   mounted() {}
 };
