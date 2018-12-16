@@ -249,7 +249,7 @@ router.get('/users', function (req, res, next) {
 /**
  * ok 充值和提现的api
  */
-router.put('balnce', function (req, res, next) {
+router.post('balnce', function (req, res, next) {
     var change_type = req.body.change_type;
     var value = req.body.value;
     var card_id = req.body.card_id;

@@ -1,3 +1,4 @@
+create database ecard character set utf8;
 use ecard;
 create table user (
   id int(11) primary key not null auto_increment,
@@ -6,7 +7,7 @@ create table user (
   avatar varchar(100) comment '用户头像',
   type tinyint(4) not null default 0 comment '用户类型，0为消费者，1为商家，2为财务处',
   balance double not null default 0.0 comment '卡中余额',
-  is_lost tinyint(4) not null default 0 comment '卡挂失为1',
+  card_status tinyint(4) not null default 0 comment '卡挂失为1',
   created_at timestamp not null default current_timestamp(),
   updated_at datetime default null on update current_timestamp()
 );
