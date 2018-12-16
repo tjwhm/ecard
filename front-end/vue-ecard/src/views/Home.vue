@@ -10,8 +10,8 @@
     </div>
     <div style="height: 70px;"/>
     <router-link to="/detail"><button>详单查询</button></router-link>
-    <button>挂失</button>
-    <button>帮助</button>
+    <button @click=showReportLossConfirm>挂失</button>
+    <router-link to="/about"><button>帮助文档</button></router-link>
     <div style="height: 50px;"/>
     <Footer />
   </div>
@@ -22,6 +22,12 @@
 import Header from "@/components/Header.vue";
 import CashBlock from "@/components/CashBlock.vue";
 import Footer from "@/components/Footer.vue";
+
+import Alert from "@/components/Alert.vue";
+import MessageBox from "@/components/MessageBox.vue";
+import { create } from "vue-modal-dialogs";
+const messageBox = create(MessageBox, "title", "content");
+const alertBox = create(Alert, "title", "content", "buttonText");
 
 export default {
   name: "home",
@@ -46,6 +52,22 @@ export default {
           let mt = require("@/methods/mt.js");
           this.metadata = mt.toMetadata(this.records);
         });
+    },
+    async showReportLossConfirm() {
+      if (
+        await messageBox(
+          "Confirm",
+          "是否确定挂失？为安全考虑，挂失后卡片将暂时无法消费。若需解挂，请向财务处申请。"
+        )
+      ) {
+        this.$http
+          .put("card_status", { card_status: 1 })
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);
+            alertBox("Succeed", "挂失成功", "关闭");
+          });
+      }
     }
   },
   mounted() {

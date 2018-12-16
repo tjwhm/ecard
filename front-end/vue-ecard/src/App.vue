@@ -1,16 +1,22 @@
 <template>
   <div id="app">
-    <!--
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    -->
     <div class="fixed-width-container">
       <router-view/>
     </div>
+    <dialogs-wrapper></dialogs-wrapper>
   </div>
+
 </template>
+
+<script>
+import Vue from "vue";
+import * as ModalDialogs from "vue-modal-dialogs";
+Vue.use(ModalDialogs);
+
+export default {
+  name: "app"
+};
+</script>
 
 <style lang="scss">
 @font-face {
@@ -50,9 +56,20 @@ a {
   color: inherit;
 }
 
-a:hover {
+a:hover,
+.clickable:hover {
   opacity: 0.8;
   text-decoration: none;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
 }
 
 @mixin sized-input() {
@@ -141,5 +158,27 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 980px) {
+  .fixed-width-container {
+    width: 87%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .flex-cashblock-container {
+    flex-wrap: wrap;
+    .cashblock {
+      margin-right: 20px;
+    }
+  }
+
+  input,
+  button {
+    margin-bottom: 20px;
+  }
 }
 </style>

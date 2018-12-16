@@ -6,7 +6,7 @@
     <div>
       <input type="text" placeholder="消费者帐号">
       <input type="number" placeholder="充值额">
-      <button>确认充值</button>
+      <button @click="comfirmTopup">确认充值</button>
     </div>
     <div style="height: 50px;"/>
     <TitleCluster title-zh="为商家提现" title-en="Record withdraw"></TitleCluster>
@@ -63,6 +63,17 @@ export default {
         .then(json => {
           this.records = json.data;
         });
+    },
+    async comfirmTopup() {
+      if (await messageBox("Confirm", "是否确认充值？")) {
+        this.$http
+          .post("balance", {})
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);
+            alertBox("Succeed", "充值成功", "关闭");
+          });
+      }
     }
   },
   mounted() {}
