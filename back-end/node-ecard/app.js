@@ -29,8 +29,11 @@ app.use(function(req, res, next) {
 });
 
 //
-app.use('/', indexRouter);
-app.use('/login', loginRouter);
+app.use('/api/', indexRouter);
+app.use('/api/login', loginRouter);
+
+// app.use('/api', indexRouter);
+// app.use('/api/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

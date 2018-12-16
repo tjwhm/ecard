@@ -5,13 +5,20 @@
  * @param next
  */
 module.exports = (req,res,next)=>{
-    // if(!req.query.userid){
-    //     return res.redirect('/sign/in');
+    console.log(3016218088);
+    req.session = {
+      'user_number':3016218088
+    };
+    // req.session.user_number = 3016218088;
+    console.log(3016218088);
+    // if(!req.session.user_number){
+    //     res.send(JSON.stringify({
+    //         "error_code": 1000,
+    //         "message": "请登录"
+    //     }));
+    // } else {
+    console.log(req.session);
+        next();
     // }
 
-    req.session = {
-        "user_number" : 3016218088,
-        "location": "平园超市"
-    };
-    next();
 };

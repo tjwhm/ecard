@@ -9,25 +9,6 @@ var router = express.Router();
 //使用checkoutLogin中间键
 router.use(checkoutLogin);
 
-/* GET home page. */
-router.get('/mysql-test', function(req, res, next) {
-    console.log("test");
-    pool.getConnection(function (err, connection) {
-        if(err){
-            console.log(err);
-        }
-        connection.query('select * from user', function (err, result) {
-            connection.release();
-            if(err) {
-            }else {
-            }
-
-            console.log(result[0]);
-        })
-    });
-});
-
-
 /**
  * 用户登出的api
  */
@@ -45,20 +26,25 @@ router.get('/userinfo', function (req, res, next) {
         }
 
         connection.query(
-            'select type, user_name, balance, avatar, is_lost from user where user_number = ?',
+            'select type, user_name, balance, avatar, card_status from user where user_number = ?',
             [req.session.user_number],
             function (err, result) {
             connection.release();
             if(err) {
                 dbError.sqlError(res, err);
             }else {
-                data = {
+                console.log(result);
+                console.log("0");
+                console.log(result[0]);
+                console.log(result[0].balance);
+                var data = {
                     "user_type": result[0].type,
                     "username": result[0].user_name,
                     "balance": result[0].balance,
-                    "avatar_url": 'https://i.twtstudio.com'.result[0].avatar,
-                    "card_status": result[0].is_lost
+                    "avatar_url": 'https://i.twtstudio.com'+result[0].avatar,
+                    "card_status": result[0].card_status
                 };
+                console.log(data);
                 res.send(JSON.stringify({
                     "error_code":0,
                     "message":"用户的完整数据",
