@@ -21,6 +21,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: "ecard web",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {user:"default",maxAge: 10*24*60*60*1000}
+}));
+
+
 // 允许所有的请求形式
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -29,11 +37,9 @@ app.use(function(req, res, next) {
 });
 
 //
-app.use('/api/', indexRouter);
 app.use('/api/login', loginRouter);
+app.use('/api/', indexRouter);
 
-// app.use('/api', indexRouter);
-// app.use('/api/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

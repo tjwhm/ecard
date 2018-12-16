@@ -19,23 +19,24 @@ router.get('/storage', function (req, res, next) {
     sso.getUserInfo(token, function (err, data) {
         //异常处理
         if(err) {
-            console.log({
+            res.json({
                 "error_code": 1001,
                 "message": err
             });
         }
+        console.log("data");
         console.log(data);
-        console.log(data.status);
         if(data != null && data.status == 1) {
             pool.getConnection(function (err, connection) {
                 dbError.connectionError(res, err);
                 var ssoResult = data.result;
                 connection.query(
-                    'select count(id)，  from user where user_number = ?',
+                    'select location from user where user_number = ?',
                     [ssoResult.user_number],
                     function (err, result) {
                         connection.release();
                         dbError.sqlError(res, err);
+                        var location;
                         if(!result) {
                             connection.query(
                                 'insert into user(user_number, user_name, avatar) values(?,?,?)',
@@ -45,10 +46,19 @@ router.get('/storage', function (req, res, next) {
                                     dbError.sqlError(res, err);
                                 }
                             );
+                            location = "天津大学";
+                        } else {
+                            location = result[0].location;
                         }
+                        req.session.user_name = ssoResult.twt_name;
+                        req.session.user_number = ssoResult.user_number;
+                        req.session.location = location;
+                        console.log(req.session);
+                        console.log("link");
+                        var link = "127.0.0.1:3000/api/userinfo";
+                        res.redirect(link);
                     }
                 );
-
             });
         } else {
             res.send(JSON.stringify({
@@ -57,13 +67,6 @@ router.get('/storage', function (req, res, next) {
                 "data":[]
             }));
         }
-
-
-        // res.send(JSON.stringify({
-        //     "error_code": 0,
-        //     "message": "???",
-        //     "data": 1
-        // }));
     });
 });
 
