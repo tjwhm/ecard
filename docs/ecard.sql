@@ -12,6 +12,8 @@ create table user (
   updated_at datetime default null on update current_timestamp()
 );
 
+alter TABLE user add location set VARCHAR(200) DEFAULT '天津大学' comment '地点';
+
 create table record(
   id int(11) primary key not null auto_increment,
   type tinyint(4) not null default 0 comment '0为消费，1为充值',

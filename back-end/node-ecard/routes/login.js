@@ -70,5 +70,4 @@ router.get('/storage', function (req, res, next) {
     });
 });
 
-
 module.exports = router;
