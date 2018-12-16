@@ -7,7 +7,7 @@ var router = express.Router();
 var sso = new Sso(34, 'PVr4AK3vrjgY8jZNJks1');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var link = "http:ecard.twtstudio.wang";
+    var link = "http://ecard.twtstudio.wang";
     res.redirect(sso.getLoginUrl(link));
 });
 
