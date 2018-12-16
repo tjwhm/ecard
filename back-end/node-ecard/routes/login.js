@@ -7,7 +7,7 @@ var router = express.Router();
 var sso = new Sso(34, 'PVr4AK3vrjgY8jZNJks1');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var link = "http://127.0.0.1:3000/api/login/storage";
+    var link = "http://127.0.0.1:8080/#/";
     res.redirect(sso.getLoginUrl(link));
 });
 
