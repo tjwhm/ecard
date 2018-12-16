@@ -1,6 +1,8 @@
 back-end/node-ecard/node_modules
 back-end/node-ecard/db/db.js
 /back_end/node_ecard/.idea
+/back_end/node_ecard/db/db.js
+/back_end/node_ecard/db/db.md
 
 .gradle
 /local.properties
