@@ -7,7 +7,7 @@ var router = express.Router();
 var sso = new Sso(34, 'PVr4AK3vrjgY8jZNJks1');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var link = "http://127.0.0.1:8080/#/";
+    var link = "http:ecard.twtstudio.wang";
     res.redirect(sso.getLoginUrl(link));
 });
 
@@ -55,7 +55,7 @@ router.get('/storage', function (req, res, next) {
                         req.session.location = location;
                         console.log(req.session);
                         console.log("link");
-                        var link = "127.0.0.1:3000/api/userinfo";
+                        var link = "127.0.0.1:8080/#/";
                         res.redirect(link);
                     }
                 );
