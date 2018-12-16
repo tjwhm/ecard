@@ -13,7 +13,12 @@ router.use(checkoutLogin);
  * 用户登出的api
  */
 router.get('/logout', function (req, res, next) {
-
+    req.session.destroy(function () {
+        res.send(JSON.stringify({
+            "error_code":0,
+            "message":"登出成功"
+        }))
+    });
 });
 
 /**
