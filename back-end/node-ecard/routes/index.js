@@ -76,7 +76,7 @@ router.get('/records', function (req, res, next) {
                   connection.release();
                   dbError.sqlError(res, err);
                   for(i in result) {
-                      result[i].record_type = type;
+                      result[i].record_type = result[i].type;
                       delete  result[i].type;
                       result[i].timestamp = result[i].created_at;
                       delete result[i].created_at;
@@ -97,7 +97,7 @@ router.get('/records', function (req, res, next) {
                   connection.release();
                   dbError.sqlError(res, err);
                   for(i in result) {
-                      result[i].record_type = type;
+                      result[i].record_type = result[i].type;
                       delete  result[i].type;
                       result[i].timestamp = result[i].created_at;
                       delete result[i].created_at;
@@ -131,96 +131,95 @@ router.post('/deal', function (req, res, next) {
     timestamp = new Date();
     timestamp = timestamp.getTime();
 
-    pool.getConnection(function (err, con1, con2, con3, con4, con5, con6) {
-        if(err){
-            dbError.connectionError(res, err);
-        }
+    pool.getConnection(function (err, connection) {
+        dbError.connectionError(res, err);
 //商家部分的相关处理
-        console.log('商家');
-        con1 .query(
+        connection.query(
             'select balance from user where user_number = ?',
             [req.session.user_number],
             function (err, result) {
-                con1.release();
                 dbError.sqlError(res, err);
                 balance = result[0].balance;
-                latest_balance = balance + value;
-                console.log('剩余值');
-                console.log(latest_balance);
-            }
-        );
-        //更新商家最新的余额
-        con2.query(
-            'update user set balance = ? where user_number = ?',
-            [latest_balance, req.session.user_number],
-            function (err) {
-                con2.release();
-                dbError.sqlError(res, err);
-            }
-        );
-        //插入商家具体记录
-        con3.query(
-            'insert into recode(type, card_id, value, location, latest_balance) values(?,?,?,?,?)',
-            [0, req.session.user_number, value, location, latest_balance],
-            function (err) {
-                con3.release();
-                dbError.sqlError(res, err);
+                latest_balance = parseFloat(balance) + parseFloat(value);
+                //更新商家最新的余额
+                connection.query(
+                    'update user set balance = ? where user_number = ?',
+                    [latest_balance, req.session.user_number],
+                    function (err) {
+                        dbError.sqlError(res, err);
+
+                        //插入商家具体记录
+                        connection.query(
+                            'insert into record(type, card_id, value, location, latest_balance) values(?,?,?,?,?)',
+                            [1, req.session.user_number, value, location, latest_balance],
+                            function (err) {
+                                dbError.sqlError(res, err);
+                                //消费者部分的相关处理
+                                connection.query(
+                                    'select balance from user where user_number = ?',
+                                    [card_id],
+                                    function (err, result) {
+                                        dbError.sqlError(res, err);
+                                        balance = result[0].balance;
+                                        latest_balance = parseFloat(balance) - parseFloat(value);
+                                        if(latest_balance < 0) {
+                                            res.send(JSON.stringify({
+                                                "error_code":1,
+                                                "message":"余额不足请充值"
+                                            }))
+                                        }
+
+                                        //跟新消费者最新的余额
+                                        connection.query(
+                                            'update user set balance = ? where user_number = ?',
+                                            [latest_balance, card_id],
+                                            function (err) {
+                                                dbError.sqlError(res, err);
+
+                                                //插入消费者具体记录
+                                                connection.query(
+                                                    'insert into record(type, card_id, value, location, latest_balance) values(?,?,?,?,?)',
+                                                    [0, card_id, value, location, latest_balance],
+                                                    function (err) {
+                                                        connection.release();
+                                                        dbError.sqlError(res, err);
+
+                                                        //组后返回用户的具体信息
+                                                        res.send(JSON.stringify({
+                                                            "error_code": 0,
+                                                            "message": "本次消费情况",
+                                                            "data": {
+                                                                "timestamp":timestamp,
+                                                                "type":0,
+                                                                "value":value,
+                                                                "location": location,
+                                                                "latest_balance": latest_balance
+                                                            }
+                                                        }));
+                                                    }
+                                                );
+                                            }
+                                        );
+
+                                    }
+                                );
+
+
+
+                            }
+                        );
+                    }
+                );
             }
         );
 
-        console.log('消费者');
-//消费者部分的相关处理
-        con4.query(
-            'select balance from user where user_number = ?',
-            [card_id],
-            function (err, result) {
-                con4.release();
-                console.log(result);
-                if(err) {
-                    dbError.sqlError(res, err);
-                }
-                balance = result[0].balance;
-                latest_balance = balance - value;
-            }
-        );
-        //跟新消费者最新的余额
-        con5.query(
-            'update user set balance = ? where user_number = ?',
-            [latest_balance, card_id],
-            function (err) {
-                con5.release();
-                dbError.sqlError(res, err);
-            }
-        );
-        //插入消费者具体记录
-        con6.query(
-            'insert into recode(type, card_id, value, location, latest_balance) values(?,?,?,?,?)',
-            [0, card_id, value, location, latest_balance],
-            function (err) {
-                con6.release();
-                dbError.sqlError(res, err);
-            }
-        );
 
-        console.log('消费类型');
-        console.log('具体金额');
-        console.log(value);
-        console.log('地点');
-        console.log(location);
-        console.log('剩余值');
-        console.log(latest_balance);
-        //组后返回用户的具体信息
-        res.send(JSON.stringify({
-            "error_code": 0,
-            "message": "本次消费情况",
-            "data": {
-                "timestamp":timestamp,
-                "type":0,
-                "value":value,
-                "location": location,
-                "latest_balance": latest_balance
-            }
-        }));
+
+
+
+
+
+
     });
 });
 
@@ -231,9 +230,9 @@ router.get('/users', function (req, res, next) {
     var user_type = req.query.user_type;
 
     pool.getConnection(function (err, connection) {
-        if(err) {
-            dbError.connectionError(res, err);
-        }
+
+        dbError.connectionError(res, err);
+
         connection.query(
             'select user_name, user_number, avatar, balance, card_status from user where type = ?',
             [user_type],
@@ -243,7 +242,7 @@ router.get('/users', function (req, res, next) {
                     dbError.sqlError(res, err);
                 }
                 for(var i in result){
-                    result[i].avatar_url = (result[i].avatar == null)?null:'https://i.twtstudio.com'+result[i].avatar;
+                    result[i].avatar_url = (result[i].avatar == null)?null:'https://i.twtstudio.com/'+result[i].avatar;
                     result[i].user_type = user_type;
                     delete result[i].avatar;
                 }
@@ -260,63 +259,92 @@ router.get('/users', function (req, res, next) {
 /**
  * ok 充值和提现的api
  */
-router.post('balnce', function (req, res, next) {
+router.post('/balance', function (req, res, next) {
     var change_type = req.body.change_type;
     var value = req.body.value;
     var card_id = req.body.card_id;
 
-    pool.getConnection(function (err, connection) {
-        if(err) {
+    //商家提现
+    if(parseInt(change_type)) {
+        pool.getConnection(function (err, connection) {
             dbError.connectionError(res, err);
-        }
-
-        connection.query(
-            'select balance from user where user_number = ?',
-            [card_id],
-            function (err, result) {
-                connection.release();
-                if(err) {
+            connection.query(
+                'select balance from user where user_number = ?',
+                [card_id],
+                function (err, result) {
                     dbError.sqlError(res, err);
-                }
-                var latest_balance;
-                if(change_type) {
-                    if (value > result[0].balance) {
+                    var latest_balance;
+
+                    if(value > result[0].balance) {
                         res.send(JSON.stringify({
-                            "error_code": -1,
-                            "message": "金额不足",
-                        }));
+                            "error_code": 1,
+                            "message": "金额不足"
+                        }))
                     } else {
-                        latest_balance = result[0].balance - value;
+                        latest_balance = parseFloat(result[0].balance) - parseFloat(value);
                     }
-                } else {
-                    latest_balance = result[0].balance + value;
+
+                    connection.query(
+                        'update user set balance = ? where user_number = ?',
+                        [latest_balance, card_id],
+                        function (err) {
+                            dbError.sqlError(res, err);
+
+                            connection.query(
+                                'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
+                                [card_id, 0, value, req.session.location, latest_balance],
+                                function (err) {
+                                    connection.release();
+                                    dbError.sqlError(res, err);
+                                    res.send(JSON.stringify({
+                                        "error_code":0,
+                                        "message": "充值成功"
+                                    }));
+                                }
+                            );
+                        }
+                    );
                 }
+            )
+        });
+    } else {
+        pool.getConnection(function (err, connection) {
+            dbError.connectionError(res, err);
+            connection.query(
+                'select balance from user where user_number = ?',
+                [card_id],
+                function (err, result) {
+                    dbError.sqlError(res, err);
+                    var latest_balance;
 
-                connection.query(
-                    'update user set balance = ? where user_number = ?',
-                    [latest_balance, card_id],
-                    function (err) {
-                        connection.release();
-                        dbError.sqlError(res, err);
-                    }
-                );
+                    latest_balance = parseFloat(result[0].balance) + parseFloat(value);
 
-                connection.query(
-                    'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
-                    [card_id, !change_type, value, req.session.location, latest_balance],
-                    function (err) {
-                        connection.release();
-                        dbError.sqlError(res, err);
-                    }
-                );
+                    connection.query(
+                        'update user set balance = ? where user_number = ?',
+                        [latest_balance, card_id],
+                        function (err) {
+                            dbError.sqlError(res, err);
 
-                res.send(JSON.stringify({
-                    "error_code":0,
-                    "message": "成功"
-                }));
-            }
-        );
-    });
+                            connection.query(
+                                'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
+                                [card_id, 1, value, req.session.location, latest_balance],
+                                function (err) {
+                                    connection.release();
+                                    dbError.sqlError(res, err);
+
+                                    res.send(JSON.stringify({
+                                        "error_code":0,
+                                        "message": "充值成功"
+                                    }));
+                                }
+                            );
+                        }
+                    );
+                }
+            )
+        });
+    }
+
 });
 
 /**
