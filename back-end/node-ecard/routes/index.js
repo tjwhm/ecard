@@ -76,7 +76,7 @@ router.get('/records', function (req, res, next) {
                   connection.release();
                   dbError.sqlError(res, err);
                   for(i in result) {
-                      result[i].record_type = type;
+                      result[i].record_type = result[i].type;
                       delete  result[i].type;
                       result[i].timestamp = result[i].created_at;
                       delete result[i].created_at;
@@ -97,7 +97,7 @@ router.get('/records', function (req, res, next) {
                   connection.release();
                   dbError.sqlError(res, err);
                   for(i in result) {
-                      result[i].record_type = type;
+                      result[i].record_type = result[i].type;
                       delete  result[i].type;
                       result[i].timestamp = result[i].created_at;
                       delete result[i].created_at;
