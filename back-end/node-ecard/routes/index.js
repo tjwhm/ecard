@@ -136,6 +136,7 @@ router.post('/deal', function (req, res, next) {
             dbError.connectionError(res, err);
         }
 //商家部分的相关处理
+        console.log('商家');
         connection .query(
             'select balance from user where user_number = ?',
             [res.session.user_number],
@@ -167,12 +168,14 @@ router.post('/deal', function (req, res, next) {
             }
         );
 
+        console.log('消费者');
 //消费者部分的相关处理
         connection .query(
             'select balance from user where user_number = ?',
             [card_id],
             function (err, result) {
                 connection.release();
+                console.log(result);
                 if(err) {
                     dbError.sqlError(res, err);
                 }
