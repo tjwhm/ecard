@@ -68,7 +68,12 @@ export default {
         });
     },
     initChart: function() {
-      let echarts = require("echarts");
+      let echarts = require("echarts/lib/echarts");
+      // 引入柱状图
+      require('echarts/lib/chart/bar');
+      // 引入提示框和标题组件
+      require('echarts/lib/component/tooltip');
+      require('echarts/lib/component/title');
       var myChart = echarts.init(document.getElementById("chart-container"));
       myChart.setOption({
         tooltip: {},
