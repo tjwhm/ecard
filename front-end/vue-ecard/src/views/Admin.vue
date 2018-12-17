@@ -59,8 +59,12 @@ export default {
     return {
       records: undefined,
       metadata: undefined,
-      topupInfo: {},
-      withdrawInfo: {},
+      topupInfo: {
+        change_type: 0
+      },
+      withdrawInfo: {
+        change_type: 1
+      },
       recordLookupInfo: {},
       reactivateInfo: {}
     };
