@@ -37,7 +37,7 @@ router.get('/storage', function (req, res, next) {
                         connection.release();
                         dbError.sqlError(res, err);
                         var location;
-                        if(!result) {
+                        if(!result[0]) {
                             connection.query(
                                 'insert into user(user_number, user_name, avatar) values(?,?,?)',
                                 [ssoResult.user_number, ssoResult.twt_name, ssoResult.extra.avatar],
@@ -55,7 +55,7 @@ router.get('/storage', function (req, res, next) {
                         req.session.location = location;
                         console.log(req.session);
                         console.log("link");
-                        var link = "127.0.0.1:8080/#/";
+                        var link = "http://127.0.0.1:8080/#/";
                         res.redirect(link);
                     }
                 );
