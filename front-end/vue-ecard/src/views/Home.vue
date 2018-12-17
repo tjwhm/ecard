@@ -44,8 +44,8 @@ export default {
   },
   methods: {
     init: function() {
-      let sourceUrl = "https://api.myjson.com/bins/193so2";
-      fetch(sourceUrl)
+      this.$http
+        .get("records", this.store.reqConfig)
         .then(response => response.json())
         .then(json => {
           this.records = json.data;
