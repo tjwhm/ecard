@@ -230,9 +230,9 @@ router.get('/users', function (req, res, next) {
     var user_type = req.query.user_type;
 
     pool.getConnection(function (err, connection) {
-        if(err) {
-            dbError.connectionError(res, err);
-        }
+
+        dbError.connectionError(res, err);
+
         connection.query(
             'select user_name, user_number, avatar, balance, card_status from user where type = ?',
             [user_type],
@@ -242,7 +242,7 @@ router.get('/users', function (req, res, next) {
                     dbError.sqlError(res, err);
                 }
                 for(var i in result){
-                    result[i].avatar_url = (result[i].avatar == null)?null:'https://i.twtstudio.com'+result[i].avatar;
+                    result[i].avatar_url = (result[i].avatar == null)?null:'https://i.twtstudio.com/'+result[i].avatar;
                     result[i].user_type = user_type;
                     delete result[i].avatar;
                 }
@@ -259,63 +259,92 @@ router.get('/users', function (req, res, next) {
 /**
  * ok 充值和提现的api
  */
-router.post('balnce', function (req, res, next) {
+router.post('/balance', function (req, res, next) {
     var change_type = req.body.change_type;
     var value = req.body.value;
     var card_id = req.body.card_id;
 
-    pool.getConnection(function (err, connection) {
-        if(err) {
+    //商家提现
+    if(parseInt(change_type)) {
+        pool.getConnection(function (err, connection) {
             dbError.connectionError(res, err);
-        }
-
-        connection.query(
-            'select balance from user where user_number = ?',
-            [card_id],
-            function (err, result) {
-                connection.release();
-                if(err) {
+            connection.query(
+                'select balance from user where user_number = ?',
+                [card_id],
+                function (err, result) {
                     dbError.sqlError(res, err);
-                }
-                var latest_balance;
-                if(change_type) {
-                    if (value > result[0].balance) {
+                    var latest_balance;
+
+                    if(value > result[0].balance) {
                         res.send(JSON.stringify({
-                            "error_code": -1,
-                            "message": "金额不足",
-                        }));
+                            "error_code": 1,
+                            "message": "金额不足"
+                        }))
                     } else {
-                        latest_balance = result[0].balance - value;
+                        latest_balance = parseFloat(result[0].balance) - parseFloat(value);
                     }
-                } else {
-                    latest_balance = result[0].balance + value;
+
+                    connection.query(
+                        'update user set balance = ? where user_number = ?',
+                        [latest_balance, card_id],
+                        function (err) {
+                            dbError.sqlError(res, err);
+
+                            connection.query(
+                                'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
+                                [card_id, 0, value, req.session.location, latest_balance],
+                                function (err) {
+                                    connection.release();
+                                    dbError.sqlError(res, err);
+                                    res.send(JSON.stringify({
+                                        "error_code":0,
+                                        "message": "充值成功"
+                                    }));
+                                }
+                            );
+                        }
+                    );
                 }
+            )
+        });
+    } else {
+        pool.getConnection(function (err, connection) {
+            dbError.connectionError(res, err);
+            connection.query(
+                'select balance from user where user_number = ?',
+                [card_id],
+                function (err, result) {
+                    dbError.sqlError(res, err);
+                    var latest_balance;
 
-                connection.query(
-                    'update user set balance = ? where user_number = ?',
-                    [latest_balance, card_id],
-                    function (err) {
-                        connection.release();
-                        dbError.sqlError(res, err);
-                    }
-                );
+                    latest_balance = parseFloat(result[0].balance) + parseFloat(value);
 
-                connection.query(
-                    'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
-                    [card_id, !change_type, value, req.session.location, latest_balance],
-                    function (err) {
-                        connection.release();
-                        dbError.sqlError(res, err);
-                    }
-                );
+                    connection.query(
+                        'update user set balance = ? where user_number = ?',
+                        [latest_balance, card_id],
+                        function (err) {
+                            dbError.sqlError(res, err);
 
-                res.send(JSON.stringify({
-                    "error_code":0,
-                    "message": "成功"
-                }));
-            }
-        );
-    });
+                            connection.query(
+                                'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
+                                [card_id, 1, value, req.session.location, latest_balance],
+                                function (err) {
+                                    connection.release();
+                                    dbError.sqlError(res, err);
+
+                                    res.send(JSON.stringify({
+                                        "error_code":0,
+                                        "message": "充值成功"
+                                    }));
+                                }
+                            );
+                        }
+                    );
+                }
+            )
+        });
+    }
+
 });
 
 /**
