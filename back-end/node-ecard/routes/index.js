@@ -133,91 +133,93 @@ router.post('/deal', function (req, res, next) {
 
     pool.getConnection(function (err, connection) {
         dbError.connectionError(res, err);
-//商家部分的相关处理
+            //商家部分的相关处理
         connection.query(
             'select balance from user where user_number = ?',
-            [req.session.user_number],
+            [card_id],
             function (err, result) {
                 dbError.sqlError(res, err);
-                balance = result[0].balance;
-                latest_balance = parseFloat(balance) + parseFloat(value);
-                //更新商家最新的余额
-                connection.query(
-                    'update user set balance = ? where user_number = ?',
-                    [latest_balance, req.session.user_number],
-                    function (err) {
-                        dbError.sqlError(res, err);
 
-                        //插入商家具体记录
+                if(parseFloat(result[0].balance < parseFloat(value))) {
+                    res.send(JSON.stringify({
+                        "error_code":1,
+                        "message":"余额不足请充值"
+                    }))
+                }
+                connection.query(
+                    'select balance from user where user_number = ?',
+                    [req.session.user_number],
+                    function (err, result) {
+                        dbError.sqlError(res, err);
+                        balance = result[0].balance;
+                        latest_balance = parseFloat(balance) + parseFloat(value);
+                        //更新商家最新的余额
                         connection.query(
-                            'insert into record(type, card_id, value, location, latest_balance) values(?,?,?,?,?)',
-                            [1, req.session.user_number, value, location, latest_balance],
+                            'update user set balance = ? where user_number = ?',
+                            [latest_balance, req.session.user_number],
                             function (err) {
                                 dbError.sqlError(res, err);
-                                //消费者部分的相关处理
+
+                                //插入商家具体记录
                                 connection.query(
-                                    'select balance from user where user_number = ?',
-                                    [card_id],
-                                    function (err, result) {
+                                    'insert into record(type, card_id, value, location, latest_balance) values(?,?,?,?,?)',
+                                    [1, req.session.user_number, value, location, latest_balance],
+                                    function (err) {
                                         dbError.sqlError(res, err);
-                                        balance = result[0].balance;
-                                        latest_balance = parseFloat(balance) - parseFloat(value);
-                                        if(latest_balance < 0) {
-                                            res.send(JSON.stringify({
-                                                "error_code":1,
-                                                "message":"余额不足请充值"
-                                            }))
-                                        }
-
-                                        //跟新消费者最新的余额
+                                        //消费者部分的相关处理
                                         connection.query(
-                                            'update user set balance = ? where user_number = ?',
-                                            [latest_balance, card_id],
-                                            function (err) {
+                                            'select balance from user where user_number = ?',
+                                            [card_id],
+                                            function (err, result) {
                                                 dbError.sqlError(res, err);
+                                                balance = result[0].balance;
+                                                latest_balance = parseFloat(balance) - parseFloat(value);
 
-                                                //插入消费者具体记录
+                                                //跟新消费者最新的余额
                                                 connection.query(
-                                                    'insert into record(type, card_id, value, location, latest_balance) values(?,?,?,?,?)',
-                                                    [0, card_id, value, location, latest_balance],
+                                                    'update user set balance = ? where user_number = ?',
+                                                    [latest_balance, card_id],
                                                     function (err) {
-                                                        connection.release();
                                                         dbError.sqlError(res, err);
 
-                                                        //组后返回用户的具体信息
-                                                        res.send(JSON.stringify({
-                                                            "error_code": 0,
-                                                            "message": "本次消费情况",
-                                                            "data": {
-                                                                "timestamp":timestamp,
-                                                                "type":0,
-                                                                "value":value,
-                                                                "location": location,
-                                                                "latest_balance": latest_balance
+                                                        //插入消费者具体记录
+                                                        connection.query(
+                                                            'insert into record(type, card_id, value, location, latest_balance) values(?,?,?,?,?)',
+                                                            [0, card_id, value, location, latest_balance],
+                                                            function (err) {
+                                                                connection.release();
+                                                                dbError.sqlError(res, err);
+
+                                                                //组后返回用户的具体信息
+                                                                res.send(JSON.stringify({
+                                                                    "error_code": 0,
+                                                                    "message": "本次消费情况",
+                                                                    "data": {
+                                                                        "timestamp":timestamp,
+                                                                        "type":0,
+                                                                        "value":value,
+                                                                        "location": location,
+                                                                        "latest_balance": latest_balance
+                                                                    }
+                                                                }));
                                                             }
-                                                        }));
+                                                        );
                                                     }
                                                 );
+
                                             }
                                         );
 
+
+
                                     }
                                 );
-
-
-
                             }
                         );
                     }
                 );
             }
         );
-
-
-
-
-
-
 
 
     });
@@ -278,7 +280,7 @@ router.post('/balance', function (req, res, next) {
                     if(value > result[0].balance) {
                         res.send(JSON.stringify({
                             "error_code": 1,
-                            "message": "金额不足"
+                            "message": "提现失败，金额不足"
                         }))
                     } else {
                         latest_balance = parseFloat(result[0].balance) - parseFloat(value);
@@ -298,7 +300,7 @@ router.post('/balance', function (req, res, next) {
                                     dbError.sqlError(res, err);
                                     res.send(JSON.stringify({
                                         "error_code":0,
-                                        "message": "充值成功"
+                                        "message": "提现失败"
                                     }));
                                 }
                             );
@@ -368,7 +370,7 @@ router.put('/card_status', function (req, res, next) {
                    dbError.sqlError(res, err);
                 }
                 var message;
-                if(change_type) {
+                if(parseInt(change_type)) {
                     message = "挂失成功";
                 } else {
                     message = "解挂成功";
