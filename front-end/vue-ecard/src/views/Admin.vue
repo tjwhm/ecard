@@ -94,10 +94,13 @@ export default {
     },
     fetchLookupRequest() {
       this.$http
-        .get("records?card_id="+this.recordLookupInfo.card_id, this.store.reqConfig)
+        .get(
+          "records?card_id=" + this.recordLookupInfo.card_id,
+          this.store.reqConfig
+        )
         .then(response => response.json())
         .then(json => {
-          debugger
+          debugger;
           this.records = json.data;
         });
     },

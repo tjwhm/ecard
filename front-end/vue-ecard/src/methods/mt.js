@@ -1,5 +1,5 @@
 module.exports = {
-  toMetadata: function (originalData) {
+  toMetadata: function(originalData) {
     let res = {
       currentBalance: 0,
       lastAmount: 0,
@@ -13,10 +13,10 @@ module.exports = {
         .map(record => record.value)
         .reduce((current, accu) => current + accu, 0);
       res["recentTotal"] = sumAmount;
-      res["dailyAverage"] = (sumAmount / originalData.length);
+      res["dailyAverage"] = sumAmount / originalData.length;
     }
     for (let pr in res) {
-      res[pr] = res[pr].toFixed(2)
+      res[pr] = res[pr].toFixed(2);
     }
     return res;
   }
