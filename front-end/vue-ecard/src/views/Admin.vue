@@ -73,7 +73,7 @@ export default {
     async confirmTopup() {
       if (await messageBox("Confirm", "是否确认充值？")) {
         this.$http
-          .post("balance", this.topupInfo)
+          .post("balance", this.topupInfo, this.store.reqConfig)
           .then(response => response.json())
           .then(json => {
             console.log(json);
@@ -84,7 +84,7 @@ export default {
     async confirmWithdraw() {
       if (await messageBox("Confirm", "是否确认为商家提现？")) {
         this.$http
-          .post("balance", this.withdrawInfo)
+          .post("balance", this.withdrawInfo, this.store.reqConfig)
           .then(response => response.json())
           .then(json => {
             console.log(json);
@@ -94,7 +94,7 @@ export default {
     },
     fetchLookupRequest() {
       this.$http
-        .get("records", this.recordLookupInfo)
+        .get("records", this.recordLookupInfo, this.store.reqConfig)
         .then(response => response.json())
         .then(json => {
           this.records = json.data;
@@ -103,7 +103,7 @@ export default {
     async confirmReactivation() {
       if (await messageBox("Confirm", "是否确认补办完成并解挂？")) {
         this.$http
-          .put("card_status", this.reactivateInfo)
+          .put("card_status", this.reactivateInfo, this.store.reqConfig)
           .then(response => response.json())
           .then(json => {
             console.log(json);

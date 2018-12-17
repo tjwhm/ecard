@@ -29,7 +29,7 @@ export default {
   methods: {
     redirectToSeparateHome: function() {
       this.$http
-        .get("userinfo")
+        .get("userinfo", this.store.reqConfig)
         .then(response => response.json())
         .then(json => {
           console.log(json);

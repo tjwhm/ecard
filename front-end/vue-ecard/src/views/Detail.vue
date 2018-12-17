@@ -36,7 +36,7 @@ export default {
   methods: {
     init: function() {
       this.$http
-        .get("records")
+        .get("records", this.store.reqConfig)
         .then(response => response.json())
         .then(json => {
           this.records = json.data;
