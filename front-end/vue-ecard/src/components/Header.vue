@@ -33,7 +33,7 @@ export default {
   methods: {
     getUserInfo: function() {
       this.$http
-        .get("userinfo")
+        .get("userinfo", this.store.reqConfig)
         .then(response => response.json())
         .then(json => {
           this.username = json.data.username;
@@ -42,7 +42,7 @@ export default {
     async showLogoutConfirm() {
       if (await messageBox("Confirm", "是否确认登出？")) {
         this.$http
-          .get("logout")
+          .get("logout", this.store.reqConfig)
           .then(response => {
             return response.json();
           })
