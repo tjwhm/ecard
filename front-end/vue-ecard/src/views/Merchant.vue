@@ -88,7 +88,7 @@ export default {
     async newDeal() {
       if (await messageBox("Confirm", "是否确认交易？")) {
         this.$http
-          .post("deal", this.dealInfo)
+          .post("deal", this.dealInfo, {credentials: true})
           .then(response => response.json())
           .then(json => {
             console.log(json);
