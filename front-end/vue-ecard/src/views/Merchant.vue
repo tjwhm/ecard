@@ -63,7 +63,7 @@ export default {
         .then(json => {
           this.records = json.data;
           let mt = require("@/methods/mt.js");
-          this.metadata = mt.toMetadata(this.records);
+          this.metadata = mt.toMetadata(this.records, 1);
           this.initChart();
         });
     },

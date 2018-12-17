@@ -1,5 +1,5 @@
 module.exports = {
-  toMetadata: function(originalData) {
+  toMetadata: function(originalData, type) {
     let res = {
       currentBalance: 0,
       lastAmount: 0,
@@ -8,8 +8,12 @@ module.exports = {
     };
     if (originalData.length) {
       res["currentBalance"] = originalData[0].latest_balance;
-      res["lastAmount"] = originalData[0].value;
-      let sumAmount = originalData
+    }
+
+    let stemData = originalData.filter(record => record.record_type === type)
+    if (stemData.length) {
+      res["lastAmount"] = stemData[0].value;
+      let sumAmount = stemData
         .map(record => record.value)
         .reduce((current, accu) => current + accu, 0);
       res["recentTotal"] = sumAmount;

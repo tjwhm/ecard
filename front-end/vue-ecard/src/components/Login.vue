@@ -1,13 +1,17 @@
 <template>
   <div class="login">
-
-    <router-link to="/home"><button>使用天外天帐号登录</button></router-link>
+    <button @click="toLoginApi">使用天外天帐号登录</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Login"
+  name: "Login",
+  methods: {
+    toLoginApi() {
+      location.href = location.origin + "/api/login"
+    }
+  }
 };
 </script>
 
