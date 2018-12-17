@@ -142,9 +142,7 @@ router.post('/deal', function (req, res, next) {
             [req.session.user_number],
             function (err, result) {
                 connection.release();
-                if(err) {
-                    dbError.sqlError(res, err);
-                }
+                dbError.sqlError(res, err);
                 balance = result[0].balance;
                 latest_balance = balance + value;
                 console.log('剩余值');
