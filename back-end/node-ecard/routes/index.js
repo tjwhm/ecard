@@ -291,7 +291,7 @@ router.post('/balance', function (req, res, next) {
                             dbError.sqlError(res, err);
 
                             connection.query(
-                                'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
+                                'insert into records(card_id, type, value, location, latest_balance) values(?,?,?,?,?)' ,
                                 [card_id, 0, value, req.session.location, latest_balance],
                                 function (err) {
                                     connection.release();
@@ -326,7 +326,7 @@ router.post('/balance', function (req, res, next) {
                             dbError.sqlError(res, err);
 
                             connection.query(
-                                'insert into records(card_id, type, value, location, latest_balance) values(?.?,?,?,?) ,' ,
+                                'insert into records(card_id, type, value, location, latest_balance) values(?,?,?,?,?)' ,
                                 [card_id, 1, value, req.session.location, latest_balance],
                                 function (err) {
                                     connection.release();
