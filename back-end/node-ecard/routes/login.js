@@ -55,7 +55,7 @@ router.get('/storage', function (req, res, next) {
                         req.session.location = location;
                         console.log(req.session);
                         console.log("link");
-                        var link = "http://127.0.0.1:8080/#/";
+                        var link = "//ecard.twtstudio.wang";
                         res.redirect(link);
                     }
                 );

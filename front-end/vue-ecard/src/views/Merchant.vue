@@ -74,13 +74,17 @@ export default {
         tooltip: {},
         yAxis: {},
         xAxis: {
-          data: this.records.map(record => record.value)
+          data: this.records.map((record, i) => i)
         },
         series: [
           {
             name: "Amount",
             type: "bar",
-            data: this.records.map(record => record.value)
+            data: this.records.map(function(record) {
+              let processedValue = record.value
+              if (record.record_type == 0) processedValue = -processedValue
+              return processedValue
+            })
           }
         ]
       });
