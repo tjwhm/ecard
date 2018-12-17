@@ -105,8 +105,10 @@ export default {
     fetchLookupRequest() {
       this.$http
         .get(
-          "records?card_id=" + this.recordLookupInfo.card_id,
-          this.store.reqConfig
+          "records",
+          {...this.store.reqConfig, params: {
+            "card_id": this.recordLookupInfo.card_id,
+          }}
         )
         .then(response => response.json())
         .then(json => {

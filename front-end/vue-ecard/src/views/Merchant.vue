@@ -16,9 +16,9 @@
       <button @click="newDeal">确认扣费</button>
     </div>
     <div style="height: 50px;"/>
-    <TitleCluster title-zh="消费趋势" title-en="Recent Spendings Chart"></TitleCluster>
+    <TitleCluster title-zh="收支趋势" title-en="Recent Flow Chart"></TitleCluster>
     <div id="chart-container"></div>
-    <TitleCluster title-zh="流水详单" title-en="Recent Spendings Details"></TitleCluster>
+    <TitleCluster title-zh="流水详单" title-en="Recent Flow Details"></TitleCluster>
     <DataTable :records="this.records"></DataTable>
     <div style="height: 50px;"/>
     <Footer />
@@ -79,7 +79,8 @@ export default {
         tooltip: {},
         yAxis: {},
         xAxis: {
-          data: this.records.map((record, i) => i)
+          data: this.records.map((record, i) => (this.records.length - i)),
+          inverse: true
         },
         series: [
           {

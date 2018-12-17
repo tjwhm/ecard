@@ -126,5 +126,10 @@ hr.header-divider {
     left: -130px;
     top: -110px;
   }
+
+  .subheadings {
+    display: block;
+    margin-top: 10px;
+  }
 }
 </style>
