@@ -81,9 +81,9 @@ export default {
             name: "Amount",
             type: "bar",
             data: this.records.map(function(record) {
-              let processedValue = record.value
-              if (record.record_type == 0) processedValue = -processedValue
-              return processedValue
+              let processedValue = record.value;
+              if (record.record_type == 0) processedValue = -processedValue;
+              return processedValue;
             })
           }
         ]

@@ -65,7 +65,12 @@ export default {
           .then(response => response.json())
           .then(json => {
             console.log(json);
-            alertBox("Succeed", "挂失成功", "关闭");
+            if (json.error_code === 0) {
+              alertBox("Succeed", "挂失成功", "关闭");
+            }
+            else {
+              alertBox("Oops!", "操作失败：" + json.message, "关闭");
+            }
           });
       }
     }

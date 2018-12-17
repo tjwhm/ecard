@@ -8,7 +8,7 @@
       <small class="subheadings font-condensed">{{ subheadings }}</small>
       <div @click="showLogoutConfirm" class="header-icons right clickable">
         <img class="account-icon" src="../assets/account.svg">
-        <span v-if="username" class="account-text">{{ username }}</span>
+        <span v-if="username" class="account-text hide-in-mobile-view">{{ username }}</span>
       </div>
     </div>
     <hr class="header-divider"/>
@@ -16,9 +16,12 @@
 </template>
 
 <script>
+import Alert from "@/components/Alert.vue";
 import MessageBox from "@/components/MessageBox.vue";
 import { create } from "vue-modal-dialogs";
 const messageBox = create(MessageBox, "title", "content");
+const alertBox = create(Alert, "title", "content", "buttonText");
+
 
 export default {
   name: "Header",
@@ -48,7 +51,13 @@ export default {
           })
           .then(json => {
             console.log(json);
-            this.$router.push("starter");
+            if (json.error_code === 0) {
+              alertBox("Succeed", "登出成功", "返回主页");
+            }
+            else {
+              alertBox("Oops!", "操作失败：" + json.message, "关闭");
+            }
+            this.$router.push("/");
           });
       }
     }
@@ -95,7 +104,7 @@ hr.header-divider {
 
 .header-icons {
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   right: 0;
 }
 
