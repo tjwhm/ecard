@@ -147,6 +147,8 @@ router.post('/deal', function (req, res, next) {
                 }
                 balance = result[0].balance;
                 latest_balance = balance + value;
+                console.log('剩余值');
+                console.log(latest_balance);
             }
         );
         //更新商家最新的余额
@@ -202,6 +204,13 @@ router.post('/deal', function (req, res, next) {
             }
         );
 
+        console.log('消费类型');
+        console.log('具体金额');
+        console.log(value);
+        console.log('地点');
+        console.log(location);
+        console.log('剩余值');
+        console.log(latest_balance);
         //组后返回用户的具体信息
         res.send(JSON.stringify({
             "error_code": 0,

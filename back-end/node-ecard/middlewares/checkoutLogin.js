@@ -6,6 +6,10 @@
  */
 module.exports = (req,res,next)=>{
     console.log(req.session);
+    req.session = {
+        "user_number":3016202253,
+        "location":"爱湘菜"
+    };
     if(!req.session.user_number){
         res.send(JSON.stringify({
             "error_code": 1000,
