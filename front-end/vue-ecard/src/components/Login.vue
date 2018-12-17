@@ -1,7 +1,6 @@
 <template>
   <div class="login">
-
-    <router-link to="/home"><button>使用天外天帐号登录</button></router-link>
+    <router-link to="/api/login"><button>使用天外天帐号登录</button></router-link>
   </div>
 </template>
 
