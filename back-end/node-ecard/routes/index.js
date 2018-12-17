@@ -38,15 +38,11 @@ router.get('/userinfo', function (req, res, next) {
             if(err) {
                 dbError.sqlError(res, err);
             }else {
-                console.log(result);
-                console.log("0");
-                console.log(result[0]);
-                console.log(result[0].balance);
                 var data = {
                     "user_type": result[0].type,
                     "username": result[0].user_name,
                     "balance": result[0].balance,
-                    "avatar_url": 'https://i.twtstudio.com'+result[0].avatar,
+                    "avatar_url": 'https://i.twtstudio.com/'+result[0].avatar,
                     "card_status": result[0].card_status
                 };
                 console.log(data);
