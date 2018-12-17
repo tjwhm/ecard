@@ -19,7 +19,7 @@
     <TitleCluster title-zh="查询用户流水" title-en="Spending Details Lookup"></TitleCluster>
     <div>
       <input v-model.number="recordLookupInfo.card_id" type="number" placeholder="用户帐号">
-      <button @:click="fetchLookupRequest">查询近期活动</button>
+      <button @click="fetchLookupRequest">查询近期活动</button>
     </div>
     <div style="height: 50px;"/>
     <DataTable :records="this.records"></DataTable>
@@ -94,9 +94,10 @@ export default {
     },
     fetchLookupRequest() {
       this.$http
-        .get("records", this.recordLookupInfo, this.store.reqConfig)
+        .get("records?card_id="+this.recordLookupInfo.card_id, this.store.reqConfig)
         .then(response => response.json())
         .then(json => {
+          debugger
           this.records = json.data;
         });
     },

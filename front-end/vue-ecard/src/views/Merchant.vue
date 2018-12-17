@@ -6,7 +6,7 @@
       <CashBlock v-if="metadata" title-zh="当前资产" title-en="Current Balance" :amount="metadata.currentBalance"/>
       <CashBlock v-if="metadata" title-zh="上次交易额" title-en="Last Earnings" :amount="metadata.lastAmount"/>
       <CashBlock v-if="metadata" title-zh="过去 30 天交易额" title-en="Recent Earnings" :amount="metadata.recentTotal"/>
-      <CashBlock v-if="metadata" title-zh="过去 30 天日均" title-en="Daily Average" :amount="metadata.dailyAverage"/>
+      <CashBlock v-if="metadata" title-zh="每笔平均" title-en="Average Amount" :amount="metadata.dailyAverage"/>
     </div>
     <div style="height: 20px;"/>
     <TitleCluster title-zh="发起交易" title-en="Record New Deal"></TitleCluster>
