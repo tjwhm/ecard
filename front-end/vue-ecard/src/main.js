@@ -8,7 +8,6 @@ Vue.http.options.root = Root;
 
 Vue.store = Vue.prototype.store = {
   reqConfig: { credentials: true }
-
 };
 
 new Vue({
