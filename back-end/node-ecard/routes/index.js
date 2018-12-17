@@ -139,7 +139,7 @@ router.post('/deal', function (req, res, next) {
         console.log('商家');
         connection .query(
             'select balance from user where user_number = ?',
-            [res.session.user_number],
+            [req.session.user_number],
             function (err, result) {
                 connection.release();
                 if(err) {
