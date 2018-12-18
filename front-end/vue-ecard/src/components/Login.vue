@@ -9,7 +9,7 @@ export default {
   name: "Login",
   methods: {
     toLoginApi() {
-      location.href = location.origin + "/api/login"
+      location.href = location.origin + "/api/login";
     }
   }
 };

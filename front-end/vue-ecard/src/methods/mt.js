@@ -10,7 +10,7 @@ module.exports = {
       res["currentBalance"] = originalData[0].latest_balance;
     }
 
-    let stemData = originalData.filter(record => record.record_type === type)
+    let stemData = originalData.filter(record => record.record_type === type);
     if (stemData.length) {
       res["lastAmount"] = stemData[0].value;
       let sumAmount = stemData

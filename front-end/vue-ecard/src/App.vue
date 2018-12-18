@@ -55,6 +55,10 @@ a {
   color: inherit;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 a:hover,
 .clickable:hover {
   opacity: 0.8;
@@ -178,6 +182,10 @@ body {
   input,
   button {
     margin-bottom: 20px;
+  }
+
+  .hide-in-mobile-view {
+    display: none;
   }
 }
 </style>

@@ -16,9 +16,9 @@
       <button @click="newDeal">确认扣费</button>
     </div>
     <div style="height: 50px;"/>
-    <TitleCluster title-zh="消费趋势" title-en="Recent Spendings Chart"></TitleCluster>
+    <TitleCluster title-zh="收支趋势" title-en="Recent Flow Chart"></TitleCluster>
     <div id="chart-container"></div>
-    <TitleCluster title-zh="流水详单" title-en="Recent Spendings Details"></TitleCluster>
+    <TitleCluster title-zh="流水详单" title-en="Recent Flow Details"></TitleCluster>
     <DataTable :records="this.records"></DataTable>
     <div style="height: 50px;"/>
     <Footer />
@@ -68,19 +68,29 @@ export default {
         });
     },
     initChart: function() {
-      let echarts = require("echarts");
+      let echarts = require("echarts/lib/echarts");
+      // 引入柱状图
+      require('echarts/lib/chart/bar');
+      // 引入提示框和标题组件
+      require('echarts/lib/component/tooltip');
+      require('echarts/lib/component/title');
       var myChart = echarts.init(document.getElementById("chart-container"));
       myChart.setOption({
         tooltip: {},
         yAxis: {},
         xAxis: {
-          data: this.records.map(record => record.value)
+          data: this.records.map((record, i) => (this.records.length - i)),
+          inverse: true
         },
         series: [
           {
             name: "Amount",
             type: "bar",
-            data: this.records.map(record => record.value)
+            data: this.records.map(function(record) {
+              let processedValue = record.value;
+              if (record.record_type == 0) processedValue = -processedValue;
+              return processedValue;
+            })
           }
         ]
       });
