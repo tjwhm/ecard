@@ -357,13 +357,11 @@ router.put('/card_status', function (req, res, next) {
     var card_id = req.body.card_id;
 
     pool.getConnection(function (err, connection) {
-        if(err) {
-            dbError.connectionError(res, err);
-        }
+        dbError.connectionError(res, err);
 
         connection.query(
-            'update user set card_status = ? where  user_number = ?',
-            [change_type, card_id],
+            'update user set card_status = ? where user_number = ?',
+            [parseInt(change_type), card_id],
             function (err) {
                 connection.release();
                 if(err) {
