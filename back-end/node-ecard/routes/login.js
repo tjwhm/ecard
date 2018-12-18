@@ -34,7 +34,6 @@ router.get('/storage', function (req, res, next) {
                     'select location from user where user_number = ?',
                     [ssoResult.user_number],
                     function (err, result) {
-                        connection.release();
                         dbError.sqlError(res, err);
                         var location;
                         if(!result[0]) {
