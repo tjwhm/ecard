@@ -354,6 +354,7 @@ router.post('/balance', function (req, res, next) {
  */
 router.put('/card_status', function (req, res, next) {
     var change_type = req.body.change_type;
+    console.log(change_type);
     var card_id = req.body.card_id;
 
     pool.getConnection(function (err, connection) {
