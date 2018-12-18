@@ -38,7 +38,7 @@ router.get('/storage', function (req, res, next) {
                         var location;
                         if(!result[0]) {
                             connection.query(
-                                'insert into user(user_number, user_name, location, avatar) values(?,?,?)',
+                                'insert into user(user_number, user_name, location, avatar) values(?,?,?,?)',
                                 [ssoResult.user_number, ssoResult.twt_name, '天津大学', ssoResult.extra.avatar],
                                 function (err) {
                                     connection.release();
