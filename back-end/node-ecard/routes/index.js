@@ -357,30 +357,38 @@ router.put('/card_status', function (req, res, next) {
     console.log(change_type);
     var card_id = req.body.card_id;
 
-    pool.getConnection(function (err, connection) {
-        dbError.connectionError(res, err);
+    if(!card_id || !change_type) {
+        res.send(JSON.stringify({
+            "error_code":4,
+            "message":"缺少必要参数"
+        }));
+    } else {
+        pool.getConnection(function (err, connection) {
+            dbError.connectionError(res, err);
 
-        connection.query(
-            'update user set card_status = ? where user_number = ?',
-            [parseInt(change_type), card_id],
-            function (err) {
-                connection.release();
-                if(err) {
-                   dbError.sqlError(res, err);
+            connection.query(
+                'update user set card_status = ? where user_number = ?',
+                [parseInt(change_type), card_id],
+                function (err) {
+                    connection.release();
+                    if(err) {
+                        dbError.sqlError(res, err);
+                    }
+                    var message;
+                    if(parseInt(change_type)) {
+                        message = "挂失成功";
+                    } else {
+                        message = "解挂成功";
+                    }
+                    res.send(JSON.stringify({
+                        "error_code":0,
+                        "message": message
+                    }));
                 }
-                var message;
-                if(parseInt(change_type)) {
-                    message = "挂失成功";
-                } else {
-                    message = "解挂成功";
-                }
-                res.send(JSON.stringify({
-                    "error_code":0,
-                    "message": message
-                }));
-            }
-        );
-    });
+            );
+        });
+    }
+
 });
 
 module.exports = router;
