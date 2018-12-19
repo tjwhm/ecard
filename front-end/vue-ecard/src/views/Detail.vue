@@ -55,7 +55,7 @@ export default {
         tooltip: {},
         yAxis: {},
         xAxis: {
-          data: this.records.map((record, i) => record.length - i),
+          data: this.records.map((record, i) => this.record.length - i),
           inverse: true
         },
         series: [
