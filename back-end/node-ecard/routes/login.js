@@ -54,7 +54,7 @@ router.get('/storage', function (req, res, next) {
                         req.session.location = location;
                         console.log(req.session);
                         console.log("link");
-                        var link = "http://ecard.twtstudio.wang";
+                        var link = "//ecard.twtstudio.wang";
                         res.redirect(link);
                     }
                 );
