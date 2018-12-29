@@ -139,7 +139,7 @@ router.post('/deal', function (req, res, next) {
             [card_id],
             function (err, reslut) {
                 dbError.sqlError(res, err);
-
+                console.log("qiaolima");
                 console.log(reslut[0].card_status);
                 if(reslut[0].card_status) {
                     connection.release();
