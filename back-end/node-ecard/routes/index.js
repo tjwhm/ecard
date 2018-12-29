@@ -140,7 +140,7 @@ router.post('/deal', function (req, res, next) {
             function (err, reslut) {
                 dbError.sqlError(res, err);
 
-                if(reslut[0].card_status) {
+                if(reslut[0].card_status == 1) {
                     connection.release();
                     res.send(JSON.stringify({
                         'error_code': 1,
