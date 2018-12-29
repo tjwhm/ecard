@@ -139,7 +139,6 @@ router.post('/deal', function (req, res, next) {
             [card_id],
             function (err, reslut) {
                 dbError.sqlError(res, err);
-                console.log("qiaolima");
                 console.log(reslut[0].card_status);
                 if(reslut[0].card_status) {
                     connection.release();
@@ -374,7 +373,7 @@ router.put('/card_status', function (req, res, next) {
 
             connection.query(
                 'update user set card_status = ? where user_number = ?',
-                [req.body.card_id, 0],
+                [0, req.body.card_id],
                 function (err) {
                     connection.release();
                     dbError.sqlError(res, err);
@@ -391,7 +390,7 @@ router.put('/card_status', function (req, res, next) {
 
             connection.query(
                 'update user set card_status = ? where user_number = ?',
-                [req.session.user_number, 1],
+                [1, req.session.user_number],
                 function (err) {
                     connection.release();
                     dbError.sqlError(res, err);
