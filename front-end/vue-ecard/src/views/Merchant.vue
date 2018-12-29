@@ -79,7 +79,7 @@ export default {
         tooltip: {},
         yAxis: {},
         xAxis: {
-          data: this.records.map((record, i) => (this.records.length - i)),
+          data: this.records.map((record, i, arr) => (arr.length - i)),
           inverse: true
         },
         series: [

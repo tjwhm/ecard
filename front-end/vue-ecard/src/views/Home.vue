@@ -61,7 +61,7 @@ export default {
         )
       ) {
         this.$http
-          .put("card_status", { card_status: 1 }, this.store.reqConfig)
+          .put("card_status", { change_type: 1 }, this.store.reqConfig)
           .then(response => response.json())
           .then(json => {
             console.log(json);

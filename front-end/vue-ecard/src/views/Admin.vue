@@ -66,7 +66,9 @@ export default {
         change_type: 1
       },
       recordLookupInfo: {},
-      reactivateInfo: {}
+      reactivateInfo: {
+        change_type: 1
+      }
     };
   },
   methods: {
@@ -119,7 +121,7 @@ export default {
     async confirmReactivation() {
       if (await messageBox("Confirm", "是否确认补办完成并解挂？")) {
         this.$http
-          .put("card_status", { card_status: 0 }, this.store.reqConfig)
+          .put("card_status", this.reactivateInfo, this.store.reqConfig)
           .then(response => response.json())
           .then(json => {
             console.log(json);
