@@ -140,6 +140,9 @@ router.post('/deal', function (req, res, next) {
             function (err, reslut) {
                 dbError.sqlError(res, err);
 
+                res.send(JSON.stringify({
+                    "status":reslut[0].card_status
+                }));
                 if(parseInt(reslut[0].card_status)) {
                     connection.release();
                     res.send(JSON.stringify({
