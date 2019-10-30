@@ -10,11 +10,11 @@
 
 作为天外天工作室的骨干成员，小组内成员决定模拟校园卡管理系统，开发目标为校园卡综合管理终端的 Web 项目。在开发过程中，将积累相应经验，提前制定需求、策划项目和熟悉业务流程，并计划将开发过程中的部分系统架构、视觉设计语言和业务逻辑代码应用于最终实际投入使用的工程中。
 
-![Showcase.jpg](assets/ecard-preview.png "Showcase")
+![ecard-preview.png](https://i.loli.net/2019/10/30/bocIt4NjnEwUB6C.png)
 
+Figure. 项目界面运行时截图
 
-
-### 项目成员基本信息
+### Members
 
 |  姓名  |    学号    | GitHub commit 用户名 | 分工                |
 | :----: | :--------: | :------------------: | ------------------- |
@@ -23,3 +23,6 @@
 | 周菁涛 | 3016218162 |       Cyphexl        | Front-end / UI / UX |
 | 李志杰 | 3016218088 |      leezhijie       | 后端开发            |
 
+### Tech Stack
+
+- Nodejs + Vue + Jenkins
